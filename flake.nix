@@ -41,6 +41,32 @@
             name = "lsp-servers";
             paths = with pkgs; [
               shellcheck
+
+              typst
+              stix-two
+              typstfmt
+              tinymist
+              # typst-lsp
+
+              harper
+              zig
+              zls
+              nil
+              nixd
+              pyright # LSP python
+              nodePackages.yaml-language-server # LSP yaml
+              vscode-extensions.golang.go # Golang snippets
+              nodePackages.bash-language-server
+              gopls # LSP go
+              terraform-ls # LSP terraform
+              # terraform # TODO add options to enable/disable large packages like terraform
+              libgccjit # Needed for treesitter
+              # sumneko-lua-language-server # Lua language server
+              cargo
+              rustc
+              rustfmt
+              rust-analyzer
+              ltex-ls
             ];
           };
 
