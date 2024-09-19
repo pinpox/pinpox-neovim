@@ -1,4 +1,3 @@
-vim.g.indentLine_char = '│'
 vim.g.buftabline_indicators = 1
 --vim.g.indent_blankline_use_treesitter_scope = true
 
@@ -6,11 +5,6 @@ vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
 -- vim.opt.listchars:append "eol:↴"
 
-require("ibl").setup {
-    -- space_char_blankline = " ",
-    -- show_current_context = true,
-    -- show_current_context_start = false,
-}
 
 -- require'colorizer'.setup()
 -- Ensure termguicolors is enabled if not already

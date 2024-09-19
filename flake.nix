@@ -83,21 +83,19 @@
 
                   -- global lua table to acces nixpkgs plugin paths
                   plugin_dirs = {}
-                  plugin_dirs["tokyonight-nvim"] = "${pkgs.vimPlugins.tokyonight-nvim}"
+                  -- plugin_dirs["tokyonight-nvim"] = "${pkgs.vimPlugins.tokyonight-nvim}"
                   plugin_dirs["zk-nvim"] = "${pkgs.vimPlugins.zk-nvim}"
+                  plugin_dirs["indent-blankline-nvim"] = "${pkgs.vimPlugins.indent-blankline-nvim}"
 
+
+                 local utils = require("utils")
+
+                  require('config.general') -- General options, should stay first!
                   -- require("tokyonight")
                   require("plugins.zk-nvim")
+require("plugins.indent-blankline-nvim")
 
-                  -- Setup lazy.nvim
-                  require("lazy").setup({
-                    -- don't automatically check for plugin updates, we use nix for that here
-                    checker = { enabled = false },
-                  })
 
-                 -- local utils = require('utils')
-
-                 -- require('config.general') -- General options, should stay first!
                  -- require('config.pinpox-colors')
                  -- require('config.appearance')
                  -- require('config.treesitter')
@@ -109,7 +107,14 @@
                  -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
                  -- require('config.lualine')
                  -- require('config.gitsigns')
-                 -- require('config.zk')
+
+                  -- Setup lazy.nvim
+                 -- require("lazy").setup({
+                 --   -- don't automatically check for plugin updates, we use nix for that here
+                 --   checker = { enabled = false },
+                 -- })
+
+
 
               '';
               plugins = with pkgs.vimPlugins; [
