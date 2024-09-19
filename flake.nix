@@ -73,98 +73,142 @@
           neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
             pkgs.neovimUtils.makeNeovimConfig {
               wrapRc = true;
-              luaRcContent = ''
-                require("testmodule")
-                local utils = require('utils')
+              luaRcContent = /* lua */ ''
 
-                require('config.general') -- General options, should stay first!
-                require('config.pinpox-colors')
-                require('config.appearance')
-                require('config.treesitter')
-                require('config.lsp')
-                require('config.devicons')
-                require('config.cmp')
-                require('config.which-key')
-                require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                require('config.lualine')
-                require('config.gitsigns')
-                require('config.zk')
+
+
+
+-- Bootstrap lazy.nvim
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+vim.opt.rtp:prepend(lazypath)
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
+-- Setup lazy.nvim
+require("lazy").setup({
+  spec = {
+    -- add your plugins here
+
+{ dir = "${pkgs.vimPlugins.rose-pine}" },
+
+{
+    dir = "${pkgs.vimPlugins.tokyonight-nvim}",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      -- load the colorscheme here
+      vim.cmd([[colorscheme tokyonight]])
+    end,
+  },
+
+
+
+
+  },
+  -- Configure any other settings here. See the documentation for more details.
+  -- colorscheme that will be used when installing plugins.
+  install = { colorscheme = { "habamax" } },
+
+  -- don't automatically check for plugin updates, we use nix for that here
+  checker = { enabled = false },
+})
+
+
+
+                 -- require("testmodule")
+                 -- local utils = require('utils')
+
+                 -- require('config.general') -- General options, should stay first!
+                 -- require('config.pinpox-colors')
+                 -- require('config.appearance')
+                 -- require('config.treesitter')
+                 -- require('config.lsp')
+                 -- require('config.devicons')
+                 -- require('config.cmp')
+                 -- require('config.which-key')
+                 -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+                 -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+                 -- require('config.lualine')
+                 -- require('config.gitsigns')
+                 -- require('config.zk')
 
               '';
               plugins = with pkgs.vimPlugins; [
-                rose-pine
 
-                oil-nvim
+                lazy-nvim
 
-                zig-vim
-
-                ccc-nvim
-                nvim-treesitter.withAllGrammars
-                playground # Treesitter playground
-
-                zk-nvim
-                # vim-visual-increment
-                # vim-indent-object
-                # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
-                # vim-vinegar
-                bufferline-nvim
-                # i3config-vim
-                # nvim-cokeline
-                nvim-fzf
-                fzf-lua
-                indent-blankline-nvim-lua
-                colorbuddy-nvim
-                BufOnly-vim
-                ansible-vim
-                base16-vim
-                committia-vim
-                gitsigns-nvim
-                gotests-vim
-                haskell-vim
-                lualine-nvim
-                nvim-lspconfig
-                vim-jsonnet
-
-                cmp-nvim-lsp
-                cmp-buffer
-                cmp-path
-                cmp-calc
-                cmp-emoji
-                cmp-nvim-lua
-                cmp-spell
-                # cmp-cmdline -- use wilder-nvim instead
-                nvim-cmp
-                luasnip
-                cmp_luasnip
-                friendly-snippets
-
-                # nvim-colorizer-lua
-                nvim-highlight-colors
-                nvim-web-devicons
-                plenary-nvim
-                # tabular
-                vim-autoformat
-                vim-better-whitespace
-                vim-devicons
-                vim-easy-align
-                vim-eunuch
-                # vim-go # TODO https://github.com/NixOS/nixpkgs/pull/167912
-                vim-gutentags
-                vim-illuminate
-                which-key-nvim
-                vim-nix
-                vim-repeat
-                typst-vim
-                vim-sandwich
-                vim-table-mode
-                vim-terraform
-                vim-textobj-user
-                vim-gnupg
-                # vim-vsnip
-                # vim-vsnip-integ
-                wilder-nvim
-                diffview-nvim
+                #
+                # oil-nvim
+                #
+                # zig-vim
+                #
+                # ccc-nvim
+                # nvim-treesitter.withAllGrammars
+                # playground # Treesitter playground
+                #
+                # zk-nvim
+                # # vim-visual-increment
+                # # vim-indent-object
+                # # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
+                # # vim-vinegar
+                # bufferline-nvim
+                # # i3config-vim
+                # # nvim-cokeline
+                # nvim-fzf
+                # fzf-lua
+                # indent-blankline-nvim-lua
+                # colorbuddy-nvim
+                # BufOnly-vim
+                # ansible-vim
+                # base16-vim
+                # committia-vim
+                # gitsigns-nvim
+                # gotests-vim
+                # haskell-vim
+                # lualine-nvim
+                # nvim-lspconfig
+                # vim-jsonnet
+                #
+                # cmp-nvim-lsp
+                # cmp-buffer
+                # cmp-path
+                # cmp-calc
+                # cmp-emoji
+                # cmp-nvim-lua
+                # cmp-spell
+                # # cmp-cmdline -- use wilder-nvim instead
+                # nvim-cmp
+                # luasnip
+                # cmp_luasnip
+                # friendly-snippets
+                #
+                # # nvim-colorizer-lua
+                # nvim-highlight-colors
+                # nvim-web-devicons
+                # plenary-nvim
+                # # tabular
+                # vim-autoformat
+                # vim-better-whitespace
+                # vim-devicons
+                # vim-easy-align
+                # vim-eunuch
+                # # vim-go # TODO https://github.com/NixOS/nixpkgs/pull/167912
+                # vim-gutentags
+                # vim-illuminate
+                # which-key-nvim
+                # vim-nix
+                # vim-repeat
+                # typst-vim
+                # vim-sandwich
+                # vim-table-mode
+                # vim-terraform
+                # vim-textobj-user
+                # vim-gnupg
+                # # vim-vsnip
+                # # vim-vsnip-integ
+                # wilder-nvim
+                # diffview-nvim
               ];
             }
           );
