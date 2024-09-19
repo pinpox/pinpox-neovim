@@ -73,46 +73,48 @@
           neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
             pkgs.neovimUtils.makeNeovimConfig {
               wrapRc = true;
-              luaRcContent = /* lua */ ''
+              luaRcContent = with pkgs.vimPlugins; ''
 
-                  -- Bootstrap lazy.nvim
-                  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-                  vim.opt.rtp:prepend(lazypath)
-                  vim.g.mapleader = " "
-                  vim.g.maplocalleader = "\\"
+                 -- Bootstrap lazy.nvim
+                 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+                 vim.opt.rtp:prepend(lazypath)
+                 vim.g.mapleader = " "
+                 vim.g.maplocalleader = "\\"
 
-                  -- global lua table to acces nixpkgs plugin paths
-                  plugin_dirs = {}
-                  -- plugin_dirs["tokyonight-nvim"] = "${pkgs.vimPlugins.tokyonight-nvim}"
-                  plugin_dirs["zk-nvim"] = "${pkgs.vimPlugins.zk-nvim}"
-                  plugin_dirs["indent-blankline-nvim"] = "${pkgs.vimPlugins.indent-blankline-nvim}"
+                 -- global lua table to access nixpkgs plugin paths
+                 plugin_dirs = {}
+                 -- plugin_dirs["tokyonight-nvim"]    = "${tokyonight-nvim}"
+                 plugin_dirs["zk-nvim"]               = "${zk-nvim}"
+                 plugin_dirs["indent-blankline-nvim"] = "${indent-blankline-nvim}"
+                 plugin_dirs["which-key-nvim"]        = "${which-key-nvim}"
+                 plugin_dirs["nvim-highlight-colors"] = "${nvim-highlight-colors}"
+                 plugin_dirs["gitsigns-nvim"]         = "${gitsigns-nvim}"
+
 
 
                  local utils = require("utils")
 
-                  require('config.general') -- General options, should stay first!
-                  -- require("tokyonight")
-                  require("plugins.zk-nvim")
-require("plugins.indent-blankline-nvim")
+                 require('config.general') -- General options, should stay first!
+                 require("lazy").setup("plugins") -- loads all plugins in plugins dir
 
 
-                 -- require('config.pinpox-colors')
-                 -- require('config.appearance')
-                 -- require('config.treesitter')
-                 -- require('config.lsp')
-                 -- require('config.devicons')
-                 -- require('config.cmp')
-                 -- require('config.which-key')
-                 -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                 -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                 -- require('config.lualine')
-                 -- require('config.gitsigns')
 
-                  -- Setup lazy.nvim
-                 -- require("lazy").setup({
-                 --   -- don't automatically check for plugin updates, we use nix for that here
-                 --   checker = { enabled = false },
-                 -- })
+                -- require('config.pinpox-colors')
+                -- require('config.appearance')
+                -- require('config.treesitter')
+                -- require('config.lsp')
+                -- require('config.devicons')
+                -- require('config.cmp')
+                -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+                -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+                -- require('config.lualine')
+                -- require('config.gitsigns')
+
+                 -- Setup lazy.nvim
+                -- require("lazy").setup({
+                --   -- don't automatically check for plugin updates, we use nix for that here
+                --   checker = { enabled = false },
+                -- })
 
 
 
@@ -130,7 +132,6 @@ require("plugins.indent-blankline-nvim")
                 # nvim-treesitter.withAllGrammars
                 # playground # Treesitter playground
                 #
-                # zk-nvim
                 # # vim-visual-increment
                 # # vim-indent-object
                 # # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
@@ -146,7 +147,6 @@ require("plugins.indent-blankline-nvim")
                 # ansible-vim
                 # base16-vim
                 # committia-vim
-                # gitsigns-nvim
                 # gotests-vim
                 # haskell-vim
                 # lualine-nvim
@@ -167,7 +167,7 @@ require("plugins.indent-blankline-nvim")
                 # friendly-snippets
                 #
                 # # nvim-colorizer-lua
-                # nvim-highlight-colors
+                # 
                 # nvim-web-devicons
                 # plenary-nvim
                 # # tabular

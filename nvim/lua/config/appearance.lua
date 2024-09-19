@@ -5,11 +5,7 @@ vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
 -- vim.opt.listchars:append "eol:↴"
 
-
 -- require'colorizer'.setup()
--- Ensure termguicolors is enabled if not already
-vim.opt.termguicolors = true
-require('nvim-highlight-colors').setup({})
 
 -- TODO convert to lua
 vim.cmd 'let $NVIM_TUI_ENABLE_TRUE_COLOR=1'
