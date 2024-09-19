@@ -75,48 +75,26 @@
               wrapRc = true;
               luaRcContent = /* lua */ ''
 
+                  -- Bootstrap lazy.nvim
+                  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+                  vim.opt.rtp:prepend(lazypath)
+                  vim.g.mapleader = " "
+                  vim.g.maplocalleader = "\\"
 
+                  -- global lua table to acces nixpkgs plugin paths
+                  plugin_dirs = {}
+                  plugin_dirs["tokyonight-nvim"] = "${pkgs.vimPlugins.tokyonight-nvim}"
+                  plugin_dirs["zk-nvim"] = "${pkgs.vimPlugins.zk-nvim}"
 
+                  -- require("tokyonight")
+                  require("plugins.zk-nvim")
 
--- Bootstrap lazy.nvim
+                  -- Setup lazy.nvim
+                  require("lazy").setup({
+                    -- don't automatically check for plugin updates, we use nix for that here
+                    checker = { enabled = false },
+                  })
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-vim.opt.rtp:prepend(lazypath)
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
--- Setup lazy.nvim
-require("lazy").setup({
-  spec = {
-    -- add your plugins here
-
-{ dir = "${pkgs.vimPlugins.rose-pine}" },
-
-{
-    dir = "${pkgs.vimPlugins.tokyonight-nvim}",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      -- load the colorscheme here
-      vim.cmd([[colorscheme tokyonight]])
-    end,
-  },
-
-
-
-
-  },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "habamax" } },
-
-  -- don't automatically check for plugin updates, we use nix for that here
-  checker = { enabled = false },
-})
-
-
-
-                 -- require("testmodule")
                  -- local utils = require('utils')
 
                  -- require('config.general') -- General options, should stay first!
