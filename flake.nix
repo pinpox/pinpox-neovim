@@ -131,7 +131,6 @@
                 zig-vim
                 zk-nvim
 
-                # nvim-cokeline
                 # vim-vsnip
                 # vim-vsnip-integ
 
@@ -151,35 +150,41 @@
                 wrapRc = true;
                 luaRcContent = ''
 
-                   -- Bootstrap lazy.nvim
-                   local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-                   vim.opt.rtp:prepend(lazypath)
-                   vim.g.mapleader = " "
-                   vim.g.maplocalleader = "\\"
+                     -- Bootstrap lazy.nvim
+                     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+                     vim.opt.rtp:prepend(lazypath)
+                     vim.g.mapleader = " "
+                     vim.g.maplocalleader = "\\"
 
-                   -- access nixpkgs plugin paths
-                   pluginpaths = "${pluginpaths}"
-                   -- print(pluginpaths)
+                     -- Access nixpkgs plugin paths
+                     pluginpaths = "${pluginpaths}"
 
-                   local utils = require("utils")
+                     -- Pass flake's ./nvim path to allow adding it to rtp to load other lua files
+                     luamodpath = "${./nvim}"
 
-                   require('config.general') -- General options, should stay first!
-                   require("lazy").setup("plugins") -- loads all plugins in plugins dir
+                     local utils = require("utils")
+
+                     require('config.general') -- General options, should stay first!
+                     require("lazy").setup("plugins") -- loads all plugins in plugins dir
 
 
 
-                  -- require('config.pinpox-colors')
-                  -- require('config.appearance')
-                  -- require('config.devicons')
-                  -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                  -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                  -- require('config.lualine')
 
-                  -- Setup lazy.nvim
-                  -- require("lazy").setup({
-                  --   -- don't automatically check for plugin updates, we use nix for that here
-                  --   checker = { enabled = false },
-                  -- })
+
+
+
+
+
+
+                    -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+                    -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+                    -- require('config.lualine')
+
+                    -- Setup lazy.nvim
+                    -- require("lazy").setup({
+                    --   -- don't automatically check for plugin updates, we use nix for that here
+                    --   checker = { enabled = false },
+                    -- })
 
 
 
