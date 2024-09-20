@@ -37,36 +37,35 @@
         let
           pkgs = nixpkgsFor.${system};
 
+          # Extra packages that are needed for certain plugins
           extraEnv = pkgs.buildEnv {
             name = "lsp-servers";
             paths = with pkgs; [
-              shellcheck
-
-              typst
-              stix-two
-              typstfmt
-              tinymist
+              # sumneko-lua-language-server # Lua language server
+              # terraform
               # typst-lsp
-
+              cargo
+              gopls # LSP go
               harper
-              zig
-              zls
+              libgccjit # Needed for treesitter
+              ltex-ls
               nil
               nixd
-              pyright # LSP python
-              nodePackages.yaml-language-server # LSP yaml
-              vscode-extensions.golang.go # Golang snippets
               nodePackages.bash-language-server
-              gopls # LSP go
-              terraform-ls # LSP terraform
-              # terraform # TODO add options to enable/disable large packages like terraform
-              libgccjit # Needed for treesitter
-              # sumneko-lua-language-server # Lua language server
-              cargo
+              nodePackages.yaml-language-server # LSP yaml
+              pyright # LSP python
+              rust-analyzer
               rustc
               rustfmt
-              rust-analyzer
-              ltex-ls
+              shellcheck
+              stix-two
+              terraform-ls # LSP terraform
+              tinymist
+              typst
+              typstfmt
+              vscode-extensions.golang.go # Golang snippets
+              zig
+              zls
             ];
           };
 
@@ -108,7 +107,6 @@
                 oil-nvim
                 playground
                 plenary-nvim
-                tokyonight-nvim
                 typst-vim
                 vim-autoformat
                 vim-better-whitespace
@@ -130,10 +128,6 @@
                 wilder-nvim
                 zig-vim
                 zk-nvim
-
-                # vim-vsnip
-                # vim-vsnip-integ
-
               ];
 
               pluginpaths = pkgs.linkFarm "plugindirs" (
@@ -163,31 +157,8 @@
                      luamodpath = "${./nvim}"
 
                      local utils = require("utils")
-
-                     require('config.general') -- General options, should stay first!
+                     require('options') -- General options, should stay first!
                      require("lazy").setup("plugins") -- loads all plugins in plugins dir
-
-
-
-
-
-
-
-
-
-
-                    -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                    -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                    -- require('config.lualine')
-
-                    -- Setup lazy.nvim
-                    -- require("lazy").setup({
-                    --   -- don't automatically check for plugin updates, we use nix for that here
-                    --   checker = { enabled = false },
-                    -- })
-
-
-
                 '';
 
                 # We only load lazy-nvim here, so that the rest of the plugins
