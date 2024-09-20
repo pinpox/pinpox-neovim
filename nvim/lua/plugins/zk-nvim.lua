@@ -1,7 +1,10 @@
 return {
 	{
-		dir = plugin_dirs["zk-nvim"],
 		name = "zk-nvim",
+		dir = pluginpaths .. "/zk-nvim" ,
+		dependencies = {
+			{ dir = pluginpaths  .. "/fzf-lua"      },
+		},
 		config = function()
 			require("zk").setup({
 				-- can be "telescope", "fzf", "fzf_lua", "minipick", or "select" (`vim.ui.select`)

@@ -3,7 +3,7 @@
 --
 return {
 	{
-		dir = plugin_dirs["which-key-nvim"],
+		dir = pluginpaths .. "/which-key.nvim" ,
 		name = "which-key-nvim",
 		config = function()
 			local wk = require("which-key")

@@ -70,131 +70,127 @@
             ];
           };
 
-          neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
-            pkgs.neovimUtils.makeNeovimConfig {
-              wrapRc = true;
-              luaRcContent = with pkgs.vimPlugins; ''
-
-                 -- Bootstrap lazy.nvim
-                 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-                 vim.opt.rtp:prepend(lazypath)
-                 vim.g.mapleader = " "
-                 vim.g.maplocalleader = "\\"
-
-                 -- global lua table to access nixpkgs plugin paths
-                 plugin_dirs = {}
-                 -- plugin_dirs["tokyonight-nvim"]    = "${tokyonight-nvim}"
-                 plugin_dirs["zk-nvim"]               = "${zk-nvim}"
-                 plugin_dirs["indent-blankline-nvim"] = "${indent-blankline-nvim}"
-                 plugin_dirs["which-key-nvim"]        = "${which-key-nvim}"
-                 plugin_dirs["nvim-highlight-colors"] = "${nvim-highlight-colors}"
-                 plugin_dirs["gitsigns-nvim"]         = "${gitsigns-nvim}"
-
-
-
-                 local utils = require("utils")
-
-                 require('config.general') -- General options, should stay first!
-                 require("lazy").setup("plugins") -- loads all plugins in plugins dir
-
-
-
-                -- require('config.pinpox-colors')
-                -- require('config.appearance')
-                -- require('config.treesitter')
-                -- require('config.lsp')
-                -- require('config.devicons')
-                -- require('config.cmp')
-                -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                -- require('config.lualine')
-                -- require('config.gitsigns')
-
-                 -- Setup lazy.nvim
-                -- require("lazy").setup({
-                --   -- don't automatically check for plugin updates, we use nix for that here
-                --   checker = { enabled = false },
-                -- })
-
-
-
-              '';
+          neovim =
+            let
               plugins = with pkgs.vimPlugins; [
-
                 lazy-nvim
 
-                #
-                # oil-nvim
-                #
-                # zig-vim
-                #
-                # ccc-nvim
-                # nvim-treesitter.withAllGrammars
-                # playground # Treesitter playground
-                #
-                # # vim-visual-increment
-                # # vim-indent-object
-                # # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
-                # # vim-vinegar
-                # bufferline-nvim
-                # # i3config-vim
-                # # nvim-cokeline
-                # nvim-fzf
-                # fzf-lua
-                # indent-blankline-nvim-lua
-                # colorbuddy-nvim
-                # BufOnly-vim
-                # ansible-vim
-                # base16-vim
-                # committia-vim
-                # gotests-vim
-                # haskell-vim
-                # lualine-nvim
-                # nvim-lspconfig
-                # vim-jsonnet
-                #
-                # cmp-nvim-lsp
-                # cmp-buffer
-                # cmp-path
-                # cmp-calc
-                # cmp-emoji
-                # cmp-nvim-lua
-                # cmp-spell
-                # # cmp-cmdline -- use wilder-nvim instead
-                # nvim-cmp
-                # luasnip
-                # cmp_luasnip
-                # friendly-snippets
-                #
-                # # nvim-colorizer-lua
-                # 
-                # nvim-web-devicons
-                # plenary-nvim
-                # # tabular
-                # vim-autoformat
-                # vim-better-whitespace
-                # vim-devicons
-                # vim-easy-align
-                # vim-eunuch
-                # # vim-go # TODO https://github.com/NixOS/nixpkgs/pull/167912
-                # vim-gutentags
-                # vim-illuminate
-                # which-key-nvim
-                # vim-nix
-                # vim-repeat
-                # typst-vim
-                # vim-sandwich
-                # vim-table-mode
-                # vim-terraform
-                # vim-textobj-user
-                # vim-gnupg
-                # # vim-vsnip
-                # # vim-vsnip-integ
-                # wilder-nvim
-                # diffview-nvim
+                BufOnly-vim
+                ansible-vim
+                base16-vim
+                bufferline-nvim
+                ccc-nvim
+                cmp-buffer
+                cmp-calc
+                cmp-emoji
+                cmp-nvim-lsp
+                cmp-nvim-lua
+                cmp-path
+                cmp-spell
+                cmp_luasnip
+                colorbuddy-nvim
+                committia-vim
+                diffview-nvim
+                friendly-snippets
+                fzf-lua
+                gitsigns-nvim
+                gotests-vim
+                haskell-vim
+                indent-blankline-nvim
+                indent-blankline-nvim-lua
+                lualine-nvim
+                luasnip
+                nvim-cmp
+                nvim-highlight-colors
+                nvim-lspconfig
+                nvim-treesitter.withAllGrammars
+                nvim-web-devicons
+                oil-nvim
+                playground
+                plenary-nvim
+                tokyonight-nvim
+                typst-vim
+                vim-autoformat
+                vim-better-whitespace
+                vim-devicons
+                vim-easy-align
+                vim-eunuch
+                vim-gnupg
+                vim-go
+                vim-gutentags
+                vim-illuminate
+                vim-jsonnet
+                vim-nix
+                vim-repeat
+                vim-sandwich
+                vim-table-mode
+                vim-terraform
+                vim-textobj-user
+                which-key-nvim
+                wilder-nvim
+                zig-vim
+                zk-nvim
+
+                # nvim-cokeline
+                # vim-vsnip
+                # vim-vsnip-integ
+
               ];
-            }
-          );
+
+              pluginpaths = pkgs.linkFarm "plugindirs" (
+                map (x: {
+                  name = x.pname;
+                  path = x;
+                }) plugins # We could just load *all* pkgs.vimPlugins here?
+              );
+
+            in
+
+            pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
+              pkgs.neovimUtils.makeNeovimConfig {
+                wrapRc = true;
+                luaRcContent = ''
+
+                   -- Bootstrap lazy.nvim
+                   local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+                   vim.opt.rtp:prepend(lazypath)
+                   vim.g.mapleader = " "
+                   vim.g.maplocalleader = "\\"
+
+                   -- access nixpkgs plugin paths
+                   pluginpaths = "${pluginpaths}"
+                   -- print(pluginpaths)
+
+                   local utils = require("utils")
+
+                   require('config.general') -- General options, should stay first!
+                   require("lazy").setup("plugins") -- loads all plugins in plugins dir
+
+
+
+                  -- require('config.pinpox-colors')
+                  -- require('config.appearance')
+                  -- require('config.devicons')
+                  -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+                  -- -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+                  -- require('config.lualine')
+
+                  -- Setup lazy.nvim
+                  -- require("lazy").setup({
+                  --   -- don't automatically check for plugin updates, we use nix for that here
+                  --   checker = { enabled = false },
+                  -- })
+
+
+
+                '';
+
+                # We only load lazy-nvim here, so that the rest of the plugins
+                # can be loaded from the plugin manager. This dirty hack allows
+                # lazy-loading plugins to improve startup time by orders of magnitude.
+                plugins = with pkgs.vimPlugins; [ lazy-nvim ];
+              }
+            );
 
           nvim-appname = "nvim-pinpox";
 
