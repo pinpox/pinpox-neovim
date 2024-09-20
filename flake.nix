@@ -37,137 +37,136 @@
         let
           pkgs = nixpkgsFor.${system};
 
+          # Extra packages that are needed for certain plugins
           extraEnv = pkgs.buildEnv {
             name = "lsp-servers";
             paths = with pkgs; [
-              shellcheck
-
-              typst
-              stix-two
-              typstfmt
-              tinymist
+              # sumneko-lua-language-server # Lua language server
+              # terraform
               # typst-lsp
-
+              cargo
+              gopls # LSP go
               harper
-              zig
-              zls
+              libgccjit # Needed for treesitter
+              ltex-ls
               nil
               nixd
-              pyright # LSP python
-              nodePackages.yaml-language-server # LSP yaml
-              vscode-extensions.golang.go # Golang snippets
               nodePackages.bash-language-server
-              gopls # LSP go
-              terraform-ls # LSP terraform
-              # terraform # TODO add options to enable/disable large packages like terraform
-              libgccjit # Needed for treesitter
-              # sumneko-lua-language-server # Lua language server
-              cargo
+              nodePackages.yaml-language-server # LSP yaml
+              pyright # LSP python
+              rust-analyzer
               rustc
               rustfmt
-              rust-analyzer
-              ltex-ls
+              shellcheck
+              stix-two
+              terraform-ls # LSP terraform
+              tinymist
+              typst
+              typstfmt
+              vscode-extensions.golang.go # Golang snippets
+              zig
+              zls
             ];
           };
 
-          neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
-            pkgs.neovimUtils.makeNeovimConfig {
-              wrapRc = true;
-              luaRcContent = ''
-                require("testmodule")
-                local utils = require('utils')
-
-                require('config.general') -- General options, should stay first!
-                require('config.pinpox-colors')
-                require('config.appearance')
-                require('config.treesitter')
-                require('config.lsp')
-                require('config.devicons')
-                require('config.cmp')
-                require('config.which-key')
-                require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-                require('config.lualine')
-                require('config.gitsigns')
-                require('config.zk')
-
-              '';
+          neovim =
+            let
               plugins = with pkgs.vimPlugins; [
-                rose-pine
+                lazy-nvim
 
-                oil-nvim
-
-                zig-vim
-
-                ccc-nvim
-                nvim-treesitter.withAllGrammars
-                playground # Treesitter playground
-
-                zk-nvim
-                # vim-visual-increment
-                # vim-indent-object
-                # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
-                # vim-vinegar
-                bufferline-nvim
-                # i3config-vim
-                # nvim-cokeline
-                nvim-fzf
-                fzf-lua
-                indent-blankline-nvim-lua
-                colorbuddy-nvim
                 BufOnly-vim
                 ansible-vim
                 base16-vim
+                bufferline-nvim
+                ccc-nvim
+                cmp-buffer
+                cmp-calc
+                cmp-emoji
+                cmp-nvim-lsp
+                cmp-nvim-lua
+                cmp-path
+                cmp-spell
+                cmp_luasnip
+                colorbuddy-nvim
                 committia-vim
+                diffview-nvim
+                friendly-snippets
+                fzf-lua
                 gitsigns-nvim
                 gotests-vim
                 haskell-vim
+                indent-blankline-nvim
+                indent-blankline-nvim-lua
                 lualine-nvim
-                nvim-lspconfig
-                vim-jsonnet
-
-                cmp-nvim-lsp
-                cmp-buffer
-                cmp-path
-                cmp-calc
-                cmp-emoji
-                cmp-nvim-lua
-                cmp-spell
-                # cmp-cmdline -- use wilder-nvim instead
-                nvim-cmp
                 luasnip
-                cmp_luasnip
-                friendly-snippets
-
-                # nvim-colorizer-lua
+                nvim-cmp
                 nvim-highlight-colors
+                nvim-lspconfig
+                nvim-treesitter.withAllGrammars
                 nvim-web-devicons
+                oil-nvim
+                playground
                 plenary-nvim
-                # tabular
+                typst-vim
                 vim-autoformat
                 vim-better-whitespace
                 vim-devicons
                 vim-easy-align
                 vim-eunuch
-                # vim-go # TODO https://github.com/NixOS/nixpkgs/pull/167912
+                vim-gnupg
+                vim-go
                 vim-gutentags
                 vim-illuminate
-                which-key-nvim
+                vim-jsonnet
                 vim-nix
                 vim-repeat
-                typst-vim
                 vim-sandwich
                 vim-table-mode
                 vim-terraform
                 vim-textobj-user
-                vim-gnupg
-                # vim-vsnip
-                # vim-vsnip-integ
+                which-key-nvim
                 wilder-nvim
-                diffview-nvim
+                zig-vim
+                zk-nvim
               ];
-            }
-          );
+
+              pluginpaths = pkgs.linkFarm "plugindirs" (
+                map (x: {
+                  name = x.pname;
+                  path = x;
+                }) plugins # We could just load *all* pkgs.vimPlugins here?
+              );
+
+            in
+
+            pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
+              pkgs.neovimUtils.makeNeovimConfig {
+                wrapRc = true;
+                luaRcContent = ''
+
+                     -- Bootstrap lazy.nvim
+                     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+                     vim.opt.rtp:prepend(lazypath)
+                     vim.g.mapleader = " "
+                     vim.g.maplocalleader = "\\"
+
+                     -- Access nixpkgs plugin paths
+                     pluginpaths = "${pluginpaths}"
+
+                     -- Pass flake's ./nvim path to allow adding it to rtp to load other lua files
+                     luamodpath = "${./nvim}"
+
+                     local utils = require("utils")
+                     require('options') -- General options, should stay first!
+                     require("lazy").setup("plugins") -- loads all plugins in plugins dir
+                '';
+
+                # We only load lazy-nvim here, so that the rest of the plugins
+                # can be loaded from the plugin manager. This dirty hack allows
+                # lazy-loading plugins to improve startup time by orders of magnitude.
+                plugins = with pkgs.vimPlugins; [ lazy-nvim ];
+              }
+            );
 
           nvim-appname = "nvim-pinpox";
 
