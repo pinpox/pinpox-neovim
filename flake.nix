@@ -59,7 +59,7 @@
               rustfmt
               shellcheck
               stix-two
-			  stylua # lua formatter
+              stylua # lua formatter
               terraform-ls # LSP terraform
               tinymist
               typst
@@ -90,7 +90,7 @@
                 cmp_luasnip
                 colorbuddy-nvim
                 committia-vim
-				conform-nvim
+                conform-nvim
                 diffview-nvim
                 friendly-snippets
                 fzf-lua
@@ -145,22 +145,21 @@
               pkgs.neovimUtils.makeNeovimConfig {
                 wrapRc = true;
                 luaRcContent = ''
+                  -- Bootstrap lazy.nvim
+                  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+                  vim.opt.rtp:prepend(lazypath)
+                  vim.g.mapleader = " "
+                  vim.g.maplocalleader = "\\"
 
-                     -- Bootstrap lazy.nvim
-                     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-                     vim.opt.rtp:prepend(lazypath)
-                     vim.g.mapleader = " "
-                     vim.g.maplocalleader = "\\"
+                  -- Access nixpkgs plugin paths
+                  pluginpaths = "${pluginpaths}"
 
-                     -- Access nixpkgs plugin paths
-                     pluginpaths = "${pluginpaths}"
+                  -- Pass flake's ./nvim path to allow adding it to rtp to load other lua files
+                  luamodpath = "${./nvim}"
 
-                     -- Pass flake's ./nvim path to allow adding it to rtp to load other lua files
-                     luamodpath = "${./nvim}"
-
-                     local utils = require("utils")
-                     require('options') -- General options, should stay first!
-                     require("lazy").setup("plugins") -- loads all plugins in plugins dir
+                  local utils = require("utils")
+                  require('options') -- General options, should stay first!
+                  require("lazy").setup("plugins") -- loads all plugins in plugins dir
                 '';
 
                 # We only load lazy-nvim here, so that the rest of the plugins
