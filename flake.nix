@@ -59,6 +59,7 @@
               rustfmt
               shellcheck
               stix-two
+			  stylua # lua formatter
               terraform-ls # LSP terraform
               tinymist
               typst
@@ -89,6 +90,7 @@
                 cmp_luasnip
                 colorbuddy-nvim
                 committia-vim
+				conform-nvim
                 diffview-nvim
                 friendly-snippets
                 fzf-lua
@@ -108,7 +110,7 @@
                 playground
                 plenary-nvim
                 typst-vim
-                vim-autoformat
+                # vim-autoformat #replaced with conform-nvim (testing)
                 vim-better-whitespace
                 vim-devicons
                 vim-easy-align
