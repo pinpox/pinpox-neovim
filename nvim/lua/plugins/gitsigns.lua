@@ -1,6 +1,19 @@
 return {
+	-- TODO: check out https://github.com/kdheepak/lazygit.nvim
 	{
-		dir = pluginpaths  .. "/gitsigns.nvim",
+		dir = pluginpaths .. "/diffview.nvim",
+		name = "diffview-nvim",
+		config = function()
+			require("diffview").setup()
+		end,
+	},
+	{
+		dir = pluginpaths .. "/committia.vim",
+		name = "committia-vim",
+		-- config = function() end,
+	},
+	{
+		dir = pluginpaths .. "/gitsigns.nvim",
 		name = "gitsigns-nvim",
 		config = function()
 			require("gitsigns").setup({
@@ -8,17 +21,17 @@ return {
 				signs = {
 
 					-- copy from : https://en.wikipedia.org/wiki/Box-drawing_character
-					add          = { text = '┃' },
-					change       = { text = '┇' },
-					delete       = { text = '_' },
-					topdelete    = { text = '‾' },
-					changedelete = { text = '┇' },
+					add = { text = "┃" },
+					change = { text = "┇" },
+					delete = { text = "_" },
+					topdelete = { text = "‾" },
+					changedelete = { text = "┇" },
 				},
 
 				numhl = false,
 				linehl = false,
 				watch_gitdir = {
-					interval = 1000
+					interval = 1000,
 				},
 				current_line_blame = false,
 				sign_priority = 6,
@@ -32,4 +45,3 @@ return {
 		end,
 	},
 }
-

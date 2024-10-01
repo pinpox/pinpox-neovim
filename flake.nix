@@ -48,6 +48,7 @@
               gopls # LSP go
               harper
               libgccjit # Needed for treesitter
+              lua-language-server
               ltex-ls
               nil
               nixd
@@ -191,3 +192,11 @@
       });
     };
 }
+
+# TODO Missing plugins
+# TODO use flake inputs for this, if needed
+# autopairs
+# fvictorio/vim-textobj-backticks'
+# nicwest/vim-camelsnek'
+# thinca/vim-textobj-between'           "Text objects for a range between a character
+# timakro/vim-searchant'                " Better highlighting of search
