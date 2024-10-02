@@ -1,5 +1,4 @@
 return {
-
 	{ dir = pluginpaths .. "/BufOnly-vim" },
 	{ dir = pluginpaths .. "/ansible-vim" },
 	{ dir = pluginpaths .. "/vim-terraform" },
@@ -30,9 +29,5 @@ return {
 	{ dir = pluginpaths .. "/vim-textobj-user" },
 	{ dir = pluginpaths .. "/wilder-nvim" },
 	{ dir = pluginpaths .. "/zig-vim" },
-
-	{
-		-- name = "base16-vim",
-		dir = pluginpaths .. "/base16-vim",
-	},
+	{ dir = pluginpaths .. "/base16-vim" },
 }
