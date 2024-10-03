@@ -98,8 +98,6 @@
                 gitsigns-nvim
                 gotests-vim
                 haskell-vim
-                indent-blankline-nvim
-                indent-blankline-nvim-lua
                 lualine-nvim
                 luasnip
                 nvim-cmp

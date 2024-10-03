@@ -1,3 +1,4 @@
+local nixcolors = require("nixcolors")
 return {
 	{ dir = pluginpaths .. "/BufOnly-vim" },
 	{ dir = pluginpaths .. "/ansible-vim" },

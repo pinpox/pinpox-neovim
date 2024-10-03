@@ -2,44 +2,27 @@ return {
 	{
 		name = "colorbuddy",
 		dir = pluginpaths .. "/colorbuddy.nvim" ,
-		-- dependencies = {
-			--	{ dir = pluginpaths  .. "/fzf-lua"      },
-			-- },
 			config = function()
 
 				-- To load other modules form the flake's ./nvim folder
 				vim.opt.rtp:prepend(luamodpath)
 
-
-				-- local Color, c, Group, g, s = require("colorbuddy").setup()
-
-
 				local colorbuddy = require('colorbuddy')
-
-				-- Set up your custom colorscheme if you want
-				-- colorbuddy.colorscheme("my-colorscheme-name")
-
-				-- And then modify as you like
-				local Color = colorbuddy.Color
-				local c = colorbuddy.colors
-				local Group = colorbuddy.Group
-				local g = colorbuddy.groups
-				local s = colorbuddy.styles
-
-
-				local b   = s.bold
-				local i   = s.italic
-				local n   = s.inverse
-				local uc  = s.undercurl
-				local ul  = s.underline
-				local r   = s.reverse
-				local sto = s.standout
-				local no  = s.NONE
-				local v   = vim
-				local st  = s.strikethrough
-
-
-
+				local Color      = colorbuddy.Color
+				local c          = colorbuddy.colors
+				local Group      = colorbuddy.Group
+				local g          = colorbuddy.groups
+				local s          = colorbuddy.styles
+				local b          = s.bold
+				local i          = s.italic
+				local n          = s.inverse
+				local uc         = s.undercurl
+				local ul         = s.underline
+				local r          = s.reverse
+				local sto        = s.standout
+				local no         = s.NONE
+				local st         = s.strikethrough
+				local v          = vim
 
 				-- TODO Think of a better colorscheme name
 				v.g.colors_name = 'generated'
@@ -68,7 +51,6 @@ return {
 				-- Vim Primary Colors --
 				-------------------------
 				Color.new('Black',         nixcolors.Black)
-
 				Color.new('BrightBlack',   nixcolors.BrightBlack)
 
 				Color.new('White',         nixcolors.White)
@@ -95,8 +77,6 @@ return {
 				-- Highlight missing groups in bright green so we can fix them along the way
 				Color.new('TODO', "#00ff00")
 
-
-
 				-------------------------------
 				---- TreeSitter Highlighting --
 				-------------------------------
@@ -111,7 +91,7 @@ return {
 				Group.new('@const.macro',                        c.Green,        c.none, no)
 				Group.new('@constant',                           c.Cyan,         c.none, no)
 				Group.new('@constant.builtin',                   c.BrightYellow, c.none, b)
-				Group.new('@constant.comment',                   c.TODO,         c.none, no)
+				Group.new('@constant.comment',                   c.Blue,         c.none, no)
 				Group.new('@constant.html',                      c.BrightYellow, c.none, b)
 				Group.new('@constant.macro',                     c.TODO,         c.none, no)
 				Group.new('@constructor',                        c.Green,        c.none, no)
@@ -130,7 +110,7 @@ return {
 				Group.new('@float',                              c.Green,        c.none, no)
 				Group.new('@function',                           c.Blue,         c.none, no)
 				Group.new('@function.builtin',                   c.Blue,         c.none, no)
-				Group.new('@function.call',                      c.Blue,         c.none, no)
+				Group.new('@function.call',                      c.Cyan,         c.none, no)
 				Group.new('@function.macro',                     c.Yellow,       c.none, no)
 				Group.new('@include',                            c.Magenta,      c.none, no)
 				Group.new('@keyword',                            c.Magenta,      c.none, no)
@@ -144,7 +124,8 @@ return {
 				Group.new('@literal',                            c.Yellow,       c.none, no)
 				Group.new('@math',                               c.TODO,         c.none, no)
 				Group.new('@method',                             c.Cyan,         c.none, no)
-				Group.new('@method.call',                        c.Blue,         c.none, no)
+				Group.new('@method.call',                        c.Cyan,         c.none, no)
+				Group.new('@function.method.call',               c.Cyan,         c.none, no)
 				Group.new('@namespace',                          c.Magenta,      c.none, no)
 				Group.new('@none',                               c.White,        c.none, no)
 				Group.new('@note',                               c.TODO,         c.none, no)
@@ -179,7 +160,7 @@ return {
 				Group.new('@query.linter.error',                 c.TODO,         c.none, no)
 				Group.new('@repeat',                             c.Magenta,      c.none, no)
 				Group.new('@spell',                              c.none,         c.none, no)
-				Group.new('@spell.lua',                          c.Green,        c.none, no)
+				Group.new('@spell.lua',                          c.none,        c.none, no)
 				Group.new('@spell.json',                         c.none,         c.none, no)
 				Group.new('@spell.bash',                         c.Green,        c.none, no)
 				Group.new('@spell.comment',                      c.BrightWhite,  c.none, no)
@@ -252,32 +233,31 @@ return {
 				Group.new('@variable.javascript',                c.White,        c.none, no)
 				Group.new('@variable.scss',                      c.TODO,         c.none, no)
 				Group.new('@warning',                            c.TODO,         c.none, no)
-
-				Group.new('@markup.link',             c.BrightBlue,   c.none, no)
-				Group.new('@markup.link.label',       c.Blue,         c.none, ul)
-				Group.new('@markup.link.url',         c.BrightBlack,  c.none, i)
-				Group.new('@markup.strong',           c.none,         c.none, b)
-				Group.new('@markup.italic',           c.none,         c.none, i)
-				Group.new('@markup.strikethrough',    c.none,         c.none, st)
-				Group.new('@markup.quote',            c.Magenta,      c.none, i)
-				Group.new('@markup.raw.block',        c.BrightWhite,  c.none, no)
-				Group.new('@markup.block',            c.none,         c.none, no)
-				Group.new('@markup.list',             c.Cyan,         c.none, b)
-				Group.new('markdownCode',             c.Green,        c.none, no)
-				Group.new('markdownCode',             c.Green,        c.none, no)
-				Group.new('markdownCodeBlock',        c.Red,          c.none, no)
-				Group.new('markdownCodeDelimiter',    c.Green,        c.none, no)
-				Group.new('markdownHeadingDelimiter', c.BrightRed,    c.none, no)
-				Group.new('@markup.heading',          c.none,         c.none, sto)
-				Group.new('@markup.heading.1',        c.BrightRed,    c.none, b)
-				Group.new('@markup.heading.2',        c.Red,          c.none, b)
-				Group.new('@markup.heading.3',        c.Yellow,       c.none, b)
-				Group.new('@markup.heading.4',        c.BrightYellow, c.none, b)
-				Group.new('@markup.heading.5',        c.Green,        c.none, b)
-				Group.new('@markup.heading.6',        c.Red,          c.none, b)
-				Group.new('@markup.heading.7',        c.Red,          c.none, b)
-				Group.new('markdownListMarker',       c.Red,          c.none, b)
-				Group.new('markdownlinktext',         c.Blue,         c.none, b)
+				Group.new('@markup.link',                        c.BrightBlue,   c.none, no)
+				Group.new('@markup.link.label',                  c.Blue,         c.none, ul)
+				Group.new('@markup.link.url',                    c.BrightBlack,  c.none, i)
+				Group.new('@markup.strong',                      c.none,         c.none, b)
+				Group.new('@markup.italic',                      c.none,         c.none, i)
+				Group.new('@markup.strikethrough',               c.none,         c.none, st)
+				Group.new('@markup.quote',                       c.Magenta,      c.none, i)
+				Group.new('@markup.raw.block',                   c.BrightWhite,  c.none, no)
+				Group.new('@markup.block',                       c.none,         c.none, no)
+				Group.new('@markup.list',                        c.Cyan,         c.none, b)
+				Group.new('markdownCode',                        c.Green,        c.none, no)
+				Group.new('markdownCode',                        c.Green,        c.none, no)
+				Group.new('markdownCodeBlock',                   c.Red,          c.none, no)
+				Group.new('markdownCodeDelimiter',               c.Green,        c.none, no)
+				Group.new('markdownHeadingDelimiter',            c.BrightRed,    c.none, no)
+				Group.new('@markup.heading',                     c.none,         c.none, sto)
+				Group.new('@markup.heading.1',                   c.BrightRed,    c.none, b)
+				Group.new('@markup.heading.2',                   c.Red,          c.none, b)
+				Group.new('@markup.heading.3',                   c.Yellow,       c.none, b)
+				Group.new('@markup.heading.4',                   c.BrightYellow, c.none, b)
+				Group.new('@markup.heading.5',                   c.Green,        c.none, b)
+				Group.new('@markup.heading.6',                   c.Red,          c.none, b)
+				Group.new('@markup.heading.7',                   c.Red,          c.none, b)
+				Group.new('markdownListMarker',                  c.Red,          c.none, b)
+				Group.new('markdownlinktext',                    c.Blue,         c.none, b)
 
 				---------------------------
 				---- Vim Terminal Colors --
@@ -299,82 +279,6 @@ return {
 				v.g.terminal_color_14 = nixcolors.BrightCyan
 				v.g.terminal_color_7  = nixcolors.White
 				v.g.terminal_color_15 = nixcolors.BrightWhite
-
-
-				-- Group.new('@annotation', c.TODO ,c.none, no)
-				-- Group.new('@attribute', c.TODO ,c.none, no)
-				-- Group.new('@boolean', c.TODO ,c.none, no)
-				-- Group.new('@character', c.TODO ,c.none, no)
-				-- Group.new('@character.special', c.TODO ,c.none, no)
-				-- Group.new('@comment', c.TODO ,c.none, no)
-				-- Group.new('@conditional', c.TODO ,c.none, no)
-				-- Group.new('@constant', c.TODO ,c.none, no)
-				-- Group.new('@constant.builtin', c.TODO ,c.none, no)
-				-- Group.new('@constant.macro', c.TODO ,c.none, no)
-				-- Group.new('@constructor', c.TODO ,c.none, no)
-				-- Group.new('@debug', c.TODO ,c.none, no)
-				-- Group.new('@define', c.TODO ,c.none, no)
-				-- Group.new('@error', c.TODO ,c.none, no)
-				-- Group.new('@exception', c.TODO ,c.none, no)
-				-- Group.new('@field', c.TODO ,c.none, no)
-				-- Group.new('@float', c.TODO ,c.none, no)
-				-- Group.new('@function', c.TODO ,c.none, no)
-				-- Group.new('@function.builtin', c.TODO ,c.none, no)
-				-- Group.new('@function.call', c.TODO ,c.none, no)
-				-- Group.new('@function.macro', c.TODO ,c.none, no)
-				-- Group.new('@include', c.TODO ,c.none, no)
-				-- Group.new('@keyword', c.TODO ,c.none, no)
-				-- Group.new('@keyword.coroutine', c.TODO ,c.none, no)
-				-- Group.new('@keyword.function', c.TODO ,c.none, no)
-				-- Group.new('@keyword.operator', c.TODO ,c.none, no)
-				-- Group.new('@keyword.return', c.TODO ,c.none, no)
-				-- Group.new('@label', c.TODO ,c.none, no)
-				-- Group.new('@method', c.TODO ,c.none, no)
-				-- Group.new('@method.call', c.TODO ,c.none, no)
-				-- Group.new('@namespace', c.TODO ,c.none, no)
-				-- Group.new('@none', c.TODO ,c.none, no)
-				-- Group.new('@number', c.TODO ,c.none, no)
-				-- Group.new('@operator', c.TODO ,c.none, no)
-				-- Group.new('@parameter', c.TODO ,c.none, no)
-				-- Group.new('@parameter.reference', c.TODO ,c.none, no)
-				-- Group.new('@preproc', c.TODO ,c.none, no)
-				-- Group.new('@property', c.TODO ,c.none, no)
-				-- Group.new('@punctuation.bracket', c.TODO ,c.none, no)
-				-- Group.new('@punctuation.delimiter', c.TODO ,c.none, no)
-				-- Group.new('@punctuation.special', c.TODO ,c.none, no)
-				-- Group.new('@repeat', c.TODO ,c.none, no)
-				-- Group.new('@storageclass', c.TODO ,c.none, no)
-				-- Group.new('@string', c.TODO ,c.none, no)
-				-- Group.new('@string.escape', c.TODO ,c.none, no)
-				-- Group.new('@string.regex', c.TODO ,c.none, no)
-				-- Group.new('@string.special', c.TODO ,c.none, no)
-				-- Group.new('@symbol', c.TODO ,c.none, no)
-				-- Group.new('@tag', c.TODO ,c.none, no)
-				-- Group.new('@tag.attribute', c.TODO ,c.none, no)
-				-- Group.new('@tag.delimiter', c.TODO ,c.none, no)
-				-- Group.new('@text', c.TODO ,c.none, no)
-				-- Group.new('@text.danger', c.TODO ,c.none, no)
-				-- Group.new('@text.emphasis', c.TODO ,c.none, no)
-				-- Group.new('@text.environment', c.TODO ,c.none, no)
-				-- Group.new('@text.environment.name', c.TODO ,c.none, no)
-				-- Group.new('@text.literal', c.TODO ,c.none, no)
-				-- Group.new('@text.math', c.TODO ,c.none, no)
-				-- Group.new('@text.note', c.TODO ,c.none, no)
-				-- Group.new('@text.reference', c.TODO ,c.none, no)
-				-- Group.new('@text.strike', c.TODO ,c.none, no)
-				-- Group.new('@text.strong', c.TODO ,c.none, no)
-				-- Group.new('@text.title', c.TODO ,c.none, no)
-				-- Group.new('@text.todo', c.TODO ,c.none, no)
-				-- Group.new('@text.underline', c.TODO ,c.none, no)
-				-- Group.new('@text.uri', c.TODO ,c.none, no)
-				-- Group.new('@text.warning', c.TODO ,c.none, no)
-				-- Group.new('@type', c.TODO ,c.none, no)
-				-- Group.new('@type.builtin', c.TODO ,c.none, no)
-				-- Group.new('@type.definition', c.TODO ,c.none, no)
-				-- Group.new('@type.qualifier', c.TODO ,c.none, no)
-				-- Group.new('@variable', c.TODO ,c.none, no)
-				-- Group.new('@variable.builtin', c.TODO ,c.none, no)
-
 
 				------------------------
 				---- Vim Editor Color --
@@ -880,11 +784,11 @@ return {
 				----     LSP Highlighting    --
 				-------------------------------
 				Group.new('LspDiagnosticsDefaultError',           c.BrightRed,   c.none,        no)
-				Group.new('LspDiagnosticsDefaultWarning',         c.Yellow,      c.none,        no)
+				Group.new('LspDiagnosticsDefaultWarning',         c.BrightYellow,      c.none,        no)
 				Group.new('LspDiagnosticsDefaultInformation',     c.Green,       c.none,        no)
 				Group.new('LspDiagnosticsDefaultHint',            c.Green,       c.none,        no)
 				Group.new('LspDiagnosticsVirtualTextError',       c.BrightRed,   c.none,        no)
-				Group.new('LspDiagnosticsVirtualTextWarning',     c.Yellow,      c.none,        no)
+				Group.new('LspDiagnosticsVirtualTextWarning',     c.BrightYellow,      c.none,        no)
 				Group.new('LspDiagnosticsVirtualTextInformation', c.Green,       c.none,        no)
 				Group.new('LspDiagnosticsVirtualTextHint',        c.Green,       c.none,        no)
 				Group.new('LspDiagnosticsUnderlineError',         c.BrightRed,   c.none,        ul)
@@ -928,17 +832,15 @@ return {
 				Group.new('diffAdded',                            c.Green,                  c.none,                   no)
 				Group.new('diffRemoved',                          c.Red,                    c.none,                   no)
 
-				--- Indent Blanklinhe
+				--- Indent Blankline
 				Group.new('IndentBlanklineChar',         c.BrightBlack, c.none,        no)
 				Group.new('IndentBlanklineContextStart', c.none,        c.BrightBlack, no)
 				Group.new('IndentBlanklineContextChar',  c.Blue,        c.none,        no)
 
 				-- Vim illuminate
 				Group.new('IlluminatedWordText',         c.none,        c.BrightBlack, no)
-
-
-
-
+				Group.new('IlluminatedWordRead',         c.none,        c.BrightBlack, no)
+				Group.new('IlluminatedWordWrite',        c.none,        c.BrightBlack, no)
 			end,
 		},
 	}
