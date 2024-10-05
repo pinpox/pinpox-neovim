@@ -1,15 +1,22 @@
 return {
 	{
-		dir = pluginpaths  .. "/nvim-treesitter",
+		dir = pluginpaths .. "/nvim-treesitter",
 		name = "nvim-treesitter",
 
 		dependencies = {
-			{dir = pluginpaths  .. "/playground"},
+			{ dir = pluginpaths .. "/playground" },
 		},
 
 		config = function()
 
-			require'nvim-treesitter.configs'.setup {
+			-- TODO: install this properly via nix instead of running :TSInstall all
+			-- https://discourse.nixos.org/t/psa-if-you-are-on-unstable-try-out-nvim-treesitter-withallgrammars/23321/6
+
+			vim.opt.runtimepath:append("~/.local/share/treesitter-grammars")
+
+			require("nvim-treesitter.configs").setup({
+
+				parser_install_dir = "~/.local/share/treesitter-grammars",
 
 				-- ensure_installed = { },
 				-- Install ascynchroniously
@@ -26,9 +33,7 @@ return {
 
 					additional_vim_regex_highlighting = false,
 				},
-			}
+			})
 		end,
 	},
 }
-
-
