@@ -79,7 +79,6 @@
                 BufOnly-vim
                 ansible-vim
                 base16-vim
-                bufferline-nvim
                 ccc-nvim
                 cmp-buffer
                 cmp-calc
@@ -106,6 +105,7 @@
                 nvim-treesitter.withAllGrammars
                 nvim-web-devicons
                 oil-nvim
+                outline-nvim
                 playground
                 plenary-nvim
                 typst-vim

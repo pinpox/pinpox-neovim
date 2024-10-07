@@ -1,6 +1,6 @@
 local nixcolors = require("nixcolors")
 return {
-	{ dir = pluginpaths .. "/BufOnly-vim" },
+	{ dir = pluginpaths .. "/BufOnly.vim" },
 	{ dir = pluginpaths .. "/ansible-vim" },
 	{ dir = pluginpaths .. "/vim-terraform" },
 	{ dir = pluginpaths .. "/base16-vim" },
@@ -10,10 +10,10 @@ return {
 	{ dir = pluginpaths .. "/luasnip" },
 	{ dir = pluginpaths .. "/nvim-highlight-colors" },
 	{ dir = pluginpaths .. "/nvim-lspconfig" },
-	{ dir = pluginpaths .. "/oil-nvim" },
+	{ dir = pluginpaths .. "/oil.nvim" },
 	{ dir = pluginpaths .. "/playground" },
-	{ dir = pluginpaths .. "/plenary-nvim" },
-	{ dir = pluginpaths .. "/typst-vim",lazy=false , ft = 'typst' },
+	{ dir = pluginpaths .. "/plenary.nvim" },
+	{ dir = pluginpaths .. "/typst.vim", lazy = false, ft = "typst" },
 	{ dir = pluginpaths .. "/vim-better-whitespace" },
 	{ dir = pluginpaths .. "/vim-devicons" },
 	{ dir = pluginpaths .. "/vim-easy-align" },
@@ -28,7 +28,7 @@ return {
 	{ dir = pluginpaths .. "/vim-sandwich" },
 	{ dir = pluginpaths .. "/vim-table-mode" },
 	{ dir = pluginpaths .. "/vim-textobj-user" },
-	{ dir = pluginpaths .. "/wilder-nvim" },
-	{ dir = pluginpaths .. "/zig-vim" },
+	{ dir = pluginpaths .. "/wilder.nvim" },
+	{ dir = pluginpaths .. "/zig.vim" },
 	{ dir = pluginpaths .. "/base16-vim" },
 }
