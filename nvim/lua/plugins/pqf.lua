@@ -3,7 +3,6 @@ return {
 		name = "nvim-pqf",
 		dir = pluginpaths .. "/nvim-pqf",
 		config = function()
-			print(pluginpaths)
 			require("pqf").setup(
 			-- {
 			-- 	signs = {

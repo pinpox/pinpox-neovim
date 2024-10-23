@@ -4,14 +4,11 @@ return {
 		name = "fzf-lua",
 		dependencies = { { dir = pluginpaths .. "/nvim-web-devicons" } },
 		config = function()
-
-		print(pluginpaths)
 			require("nvim-web-devicons").setup({
 				-- globally enable default icons (default to false)
 				-- will get overriden by `get_icons` option
 				default = true,
 			})
-
 			require("fzf-lua").setup({
 				grep = {
 					actions = {
