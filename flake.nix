@@ -76,6 +76,7 @@
               plugins = with pkgs.vimPlugins; [
                 lazy-nvim
 
+                # vim-autoformat #replaced with conform-nvim (testing)
                 BufOnly-vim
                 ansible-vim
                 base16-vim
@@ -102,6 +103,7 @@
                 nvim-cmp
                 nvim-highlight-colors
                 nvim-lspconfig
+                nvim-pqf
                 nvim-treesitter.withAllGrammars
                 nvim-web-devicons
                 oil-nvim
@@ -109,7 +111,6 @@
                 playground
                 plenary-nvim
                 typst-vim
-                # vim-autoformat #replaced with conform-nvim (testing)
                 vim-better-whitespace
                 vim-devicons
                 vim-easy-align
