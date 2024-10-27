@@ -14,13 +14,13 @@ return {
 			-- require'lspconfig'.typst_lsp.setup{}
 			require("lspconfig").tinymist.setup({})
 
-			require("lspconfig").harper_ls.setup({
-				settings = {
-					["harper-ls"] = {
-						userDictPath = "~/dict.txt",
-					},
-				},
-			})
+			-- require("lspconfig").harper_ls.setup({
+			-- 	settings = {
+			-- 		["harper-ls"] = {
+			-- 			userDictPath = "~/dict.txt",
+			-- 		},
+			-- 	},
+			-- })
 
 			-- Spell/Grammar checking, e.g for markdown files
 			require("lspconfig").ltex.setup({
