@@ -23,8 +23,14 @@ return {
 			-- })
 
 			-- Spell/Grammar checking, e.g for markdown files
-			require("lspconfig").ltex.setup({
+			require("lspconfig").ltex_plus.setup({
 				autostart = false,
+				settings = {
+					ltex = {
+						language = "de-DE",
+						enabled = { "bib", "typst" },
+					},
+				},
 			})
 
 			-- Adds `:LtexLangChangeLanguage de` command to allow changing language for a
@@ -68,7 +74,7 @@ return {
 							expr = "import <nixpkgs> { }",
 						},
 						formatting = {
-							command = { "nixpkgs-fmt" },
+							command = { "nixfmt" },
 						},
 						options = {
 							nixos = {

@@ -49,7 +49,7 @@
               harper
               libgccjit # Needed for treesitter
               lua-language-server
-              ltex-ls
+              ltex-ls-plus
               nil
               nixd
               nodePackages.bash-language-server
