@@ -36,6 +36,7 @@ return {
 					{ "<leader>8", ":LualineBuffersJump 8<CR>", hidden = true, desc = "Go to buffer 8" },
 					{ "<leader>9", ":LualineBuffersJump 9<CR>", hidden = true, desc = "Go to buffer 9" },
 
+
 					-- LSP
 					{ "<leader>c", group = "Code (LSP)" },
 					{ "<leader>cS", ":FzfLua lsp_document_symbols<CR>",      desc = "Symbols" },
@@ -52,6 +53,9 @@ return {
 					{ "<leader>q", ":FzfLua quickfix<CR>",          desc = "Quickfix" },
 					{ "<leader>G", ":FzfLua live_grep<CR>",         desc = "Live Grep" },
 					{ "<leader>r", ":lua vim.lsp.buf.rename()<CR>", desc = "Rename" },
+
+					{ "<M-j>", "<cmd>cnext<CR>", desc = "Quickfix next" },
+					{ "<M-k>", "<cmd>cprev<CR>", desc = "Quickfix previous" },
 
 					-- Git
 					{ "<leader>g", group = "Git" },
