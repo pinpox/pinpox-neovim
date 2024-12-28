@@ -51,12 +51,12 @@ return {
 					i      = nixcolors.Green,
 					v      = nixcolors.Magenta,
 					[''] = nixcolors.Magenta,
-					V      = nixcolors.BrightMagenta,
+					V      = nixcolors.Magenta,
 					c      = nixcolors.Magenta,
 					no     = nixcolors.Red,
-					s      = nixcolors.Yellow,
-					S      = nixcolors.BrightYellow,
-					[''] = nixcolors.BrightYellow,
+					s      = nixcolors.BrightYellow,
+					S      = nixcolors.Yellow,
+					[''] = nixcolors.Yellow,
 					ic     = nixcolors.Yellow,
 					R      = nixcolors.Cyan,
 					Rv     = nixcolors.BrightCyan,
@@ -162,7 +162,7 @@ return {
 									return msg
 								end,
 								icon = ' LSP:',
-								color = {fg = nixcolors.BrightCyan, gui = 'bold'}
+								color = {fg = nixcolors.Cyan, gui = 'bold'}
 							},
 						},
 
@@ -189,7 +189,7 @@ return {
 								-- Is it me or the symbol for modified us really weird
 								symbols = {added= ' ', modified= ' ', removed= ' '},
 								color_added = nixcolors.Green,
-								color_modified = nixcolors.BrightYellow,
+								color_modified = nixcolors.Yellow,
 								color_removed = nixcolors.Red,
 								condition = conditions.hide_in_width
 							},
