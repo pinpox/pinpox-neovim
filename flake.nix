@@ -90,7 +90,7 @@
                 cmp-path
                 cmp-spell
                 cmp_luasnip
-                colorbuddy-nvim
+                # colorbuddy-nvim
                 committia-vim
                 conform-nvim
                 diffview-nvim

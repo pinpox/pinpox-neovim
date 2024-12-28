@@ -1,27 +1,27 @@
 local M =  {}
 
-M.Black         = "#24273a"
-M.BrightBlack   = "#5b6078"
+	M.Black = "14161b";
+	M.BrightBlack = "2c2e33";
 
-M.White         = "#cad3f5"
-M.BrightWhite   = "#747c9e"
+	M.White = "e0e2ea";
+	M.BrightWhite = "c4c6cd";
 
-M.Red           = "#ed8796"
-M.BrightRed     = "#ff5370"
+	M.BrightRed = "5e0009";
+	M.Red = "ffbcb5";
 
-M.Yellow        = "#eed49f"
-M.BrightYellow  = "#fab387"
+	M.BrightGreen = "015825";
+	M.Green = "aaedb7";
 
-M.Green         = "#a6da95"
-M.BrightGreen   = "#68f288"
+	M.BrightYellow = "6e5600";
+	M.Yellow = "f4d88c";
 
-M.Cyan          = "#8bd5ca"
-M.BrightCyan    = "#aee2da"
+	M.BrightBlue = "005078";
+	M.Blue = "9fd8ff";
 
-M.Blue          = "#8aadf4"
-M.BrightBlue    = "#74c7ec"
+	M.BrightMagenta = "4c0049";
+	M.Magenta = "ffc3fa";
 
-M.Magenta       = "#cba6f7"
-M.BrightMagenta = "#f5bde6"
+	M.BrightCyan = "007676";
+	M.Cyan = "83efef";
 
 return M
