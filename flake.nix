@@ -48,6 +48,7 @@
               gopls # LSP go
               harper
               libgccjit # Needed for treesitter
+              fzf
               lua-language-server
               ltex-ls-plus
               nil
