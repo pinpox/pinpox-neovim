@@ -78,7 +78,6 @@
                 lazy-nvim
 
                 # vim-autoformat #replaced with conform-nvim (testing)
-                BufOnly-vim
                 ansible-vim
                 base16-vim
                 ccc-nvim
