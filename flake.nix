@@ -118,7 +118,7 @@
                 vim-gnupg
                 vim-go
                 vim-gutentags
-                vim-illuminate
+                # vim-illuminate
                 vim-jsonnet
                 vim-nix
                 vim-repeat
