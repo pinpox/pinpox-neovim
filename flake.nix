@@ -89,7 +89,7 @@
                 cmp-path
                 cmp-spell
                 cmp_luasnip
-                colorbuddy-nvim
+                # colorbuddy-nvim
                 committia-vim
                 conform-nvim
                 diffview-nvim
@@ -118,7 +118,7 @@
                 vim-gnupg
                 vim-go
                 vim-gutentags
-                vim-illuminate
+                # vim-illuminate
                 vim-jsonnet
                 vim-nix
                 vim-repeat

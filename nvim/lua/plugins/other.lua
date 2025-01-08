@@ -1,6 +1,5 @@
 local nixcolors = require("nixcolors")
 return {
-	{ dir = pluginpaths .. "/BufOnly.vim" },
 	{ dir = pluginpaths .. "/ansible-vim" },
 	{ dir = pluginpaths .. "/vim-terraform" },
 	{ dir = pluginpaths .. "/base16-vim" },
@@ -21,7 +20,7 @@ return {
 	{ dir = pluginpaths .. "/vim-gnupg" },
 	{ dir = pluginpaths .. "/vim-go" },
 	{ dir = pluginpaths .. "/vim-gutentags" },
-	{ dir = pluginpaths .. "/vim-illuminate" },
+	-- { dir = pluginpaths .. "/vim-illuminate" },
 	{ dir = pluginpaths .. "/vim-jsonnet" },
 	{ dir = pluginpaths .. "/vim-nix" },
 	{ dir = pluginpaths .. "/vim-repeat" },
