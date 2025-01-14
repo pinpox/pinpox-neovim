@@ -17,7 +17,7 @@ return {
 				chunk = {
 					enable = true,
 					style = {
-						{ fg = nixcolors.Magenta },
+						{ fg = nixcolors.BrightWhite},
 						{ fg = nixcolors.BrightRed },
 					},
 				},
