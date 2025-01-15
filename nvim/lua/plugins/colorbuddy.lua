@@ -220,7 +220,7 @@ return {
 				Group.new('@type.definition',                    c.Cyan,         c.none, b)
 				Group.new('@type.java',                          c.TODO,         c.none, no)
 				Group.new('@type.javascript',                    c.BrightBlue,   c.none, no)
-				Group.new('@type.python',                        c.TODO,         c.none, no)
+				Group.new('@type.python',                        c.BrightGreen,  c.none, no)
 				Group.new('@type.ruby',                          c.TODO,         c.none, no)
 				Group.new('@type.scss',                          c.TODO,         c.none, no)
 				Group.new('@type.typescript',                    c.TODO,         c.none, no)
