@@ -117,7 +117,7 @@
                 vim-eunuch
                 vim-gnupg
                 vim-go
-                vim-gutentags
+                # vim-gutentags
                 vim-illuminate
                 vim-jsonnet
                 vim-nix

@@ -188,7 +188,7 @@ return {
 				Group.new('@text.emphasis',                      c.TODO,         c.none, no)
 				Group.new('@text.environment',                   c.TODO,         c.none, no)
 				Group.new('@text.environment.name',              c.TODO,         c.none, no)
-				Group.new('@text.todo.comment',                  c.BrightYellow, c.none, b)
+				Group.new('@text.todo.comment',                  c.Black,        c.BrightYellow, no)
 				Group.new('@text.literal',                       c.Yellow,       c.none, no)
 				Group.new('@text.math',                          c.TODO,         c.none, no)
 				Group.new('@text.note',                          c.TODO,         c.none, no)
@@ -208,7 +208,7 @@ return {
 				Group.new('@text.title.4.marker.markdown',       c.BrightYellow, c.none, b)
 				Group.new('@text.title.5.marker.markdown',       c.BrightYellow, c.none, b)
 				Group.new('@text.title.6.marker.markdown',       c.BrightYellow, c.none, b)
-				Group.new('@text.todo',                          c.TODO,         c.none, no)
+				Group.new('@text.todo',                          c.Black,         c.BrightYellow, no)
 				Group.new('@text.underline',                     c.TODO,         c.none, no)
 				Group.new('@text.uri',                           c.Blue,         c.none, no)
 				Group.new('@text.warning',                       c.TODO,         c.none, no)
@@ -385,8 +385,8 @@ return {
 				Group.new('Debug',                    c.none,          c.none,        no)
 				Group.new('Underlined',               c.none,          c.none,        ul)
 				Group.new('Ignore',                   c.none,          c.none,        no)
-				Group.new('Error',                    c.Red,           c.BrightBlack, b)
-				Group.new('Todo',                     c.BrightYellow,  c.BrightBlack, no)
+				Group.new('Error',                    c.Red,           c.BrightBlack,  b)
+				Group.new('Todo',                     c.Black,         c.BrightYellow, no)
 
 				-------------------------
 				---- Diff Highlighting --

@@ -19,7 +19,7 @@ return {
 	{ dir = pluginpaths .. "/vim-eunuch" },
 	{ dir = pluginpaths .. "/vim-gnupg" },
 	{ dir = pluginpaths .. "/vim-go" },
-	{ dir = pluginpaths .. "/vim-gutentags" },
+	-- { dir = pluginpaths .. "/vim-gutentags" },
 	{ dir = pluginpaths .. "/vim-illuminate" },
 	{ dir = pluginpaths .. "/vim-jsonnet" },
 	{ dir = pluginpaths .. "/vim-nix" },
