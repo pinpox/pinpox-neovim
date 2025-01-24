@@ -160,6 +160,9 @@
                   local utils = require("utils")
                   require('options') -- General options, should stay first!
                   require("lazy").setup("plugins") -- loads all plugins in plugins dir
+
+                  -- Non-plugin related configs
+                  require('waste')
                 '';
 
                 # We only load lazy-nvim here, so that the rest of the plugins
