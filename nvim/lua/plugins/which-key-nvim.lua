@@ -85,12 +85,12 @@ return {
 					{ "gr", ":FzfLua lsp_references<CR>",              desc = "References" },
 					{ "gt", ":lua vim.lsp.buf.type_definition()<CR>",  desc = "Type Definition" },
 
-					{
+					--[[ {
 						-- Switch ; and :
 						mode = { "v", "n" },
 						{ ":", ";", desc = "Switch ; and :", silent = false },
 						{ ";", ":", desc = "Switch ; and :", silent = false },
-					},
+					} ]],
 
 					{
 						-----------------
