@@ -46,6 +46,7 @@
               # typst-lsp
               cargo
               gopls # LSP go
+              typescript-language-server
               harper
               libgccjit # Needed for treesitter
               fzf

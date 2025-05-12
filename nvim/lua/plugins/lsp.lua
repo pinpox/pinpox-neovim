@@ -4,6 +4,7 @@ return {
 
 		name = "nvim-lspconfig",
 		config = function()
+			require('lspconfig').ts_ls.setup{}
 			require("lspconfig").pyright.setup({})
 			require("lspconfig").gopls.setup({})
 			require("lspconfig").terraformls.setup({})
