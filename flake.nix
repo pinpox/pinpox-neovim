@@ -178,7 +178,7 @@
         in
         {
           pinpox-neovim = pkgs.writeShellScriptBin "nvim" ''
-            set -efux
+            set -efu
             unset VIMINIT
             export PATH=${extraEnv}/bin:${neovim}/bin:$PATH
             export NVIM_APPNAME=${nvim-appname}
