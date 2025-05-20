@@ -99,6 +99,7 @@
                 gitsigns-nvim
                 gotests-vim
                 haskell-vim
+                oil-nvim
                 lualine-nvim
                 luasnip
                 nvim-cmp
