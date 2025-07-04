@@ -41,7 +41,6 @@
           extraEnv = pkgs.buildEnv {
             name = "lsp-servers";
             paths = with pkgs; [
-              # sumneko-lua-language-server # Lua language server
               # terraform
               # typst-lsp
               cargo
@@ -77,19 +76,22 @@
             let
               plugins = with pkgs.vimPlugins; [
                 lazy-nvim
+                blink-cmp
+                friendly-snippets
 
                 # vim-autoformat #replaced with conform-nvim (testing)
                 ansible-vim
                 base16-vim
                 ccc-nvim
-                cmp-buffer
-                cmp-calc
-                cmp-emoji
-                cmp-nvim-lsp
-                cmp-nvim-lua
-                cmp-path
-                cmp-spell
-                cmp_luasnip
+                # nvim-cmp
+                # cmp-buffer
+                # cmp-calc
+                # cmp-emoji
+                # cmp-nvim-lsp
+                # cmp-nvim-lua
+                # cmp-path
+                # cmp-spell
+                # cmp_luasnip
                 colorbuddy-nvim
                 committia-vim
                 conform-nvim
@@ -102,7 +104,6 @@
                 oil-nvim
                 lualine-nvim
                 luasnip
-                nvim-cmp
                 nvim-highlight-colors
                 nvim-lspconfig
                 nvim-pqf
@@ -178,6 +179,80 @@
 
         in
         {
+
+          # Vim plugins, added inside existing pkgs.vimPlugins
+          # vimPlugins = super.vimPlugins // {
+          #   indent-blankline-nvim-lua = super.callPackage ../packages/indent-blankline-nvim-lua {
+          #     inputs = inputs;
+          #   };
+          #   nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
+          #   nvim-cokeline = super.callPackage ../packages/nvim-cokeline { inputs = inputs; };
+          # };
+
+          # {
+          #   pkgs,
+          #   stdenv,
+          #   fetchFromGitHub,
+          #   lib,
+          #   inputs,
+          #   ...
+          # }:
+          # pkgs.vimUtils.buildVimPlugin {
+          #   pname = "nvim-cokeline";
+          #   version = "latest";
+          #   src = inputs.nvim-cokeline;
+          #
+          #   meta = with lib; {
+          #     description = "A Neovim bufferline for people with addictive personalities";
+          #     homepage = "https://github.com/noib3/nvim-cokeline";
+          #     license = licenses.mit;
+          #     platforms = platforms.unix;
+          #   };
+          # }
+
+          # {
+          #   pkgs,
+          #   stdenv,
+          #   fetchFromGitHub,
+          #   lib,
+          #   inputs,
+          #   ...
+          # }:
+          # pkgs.vimUtils.buildVimPlugin {
+          #   pname = "indent-blankline-nvim-lua";
+          #   version = "latest";
+          #   src = inputs.indent-blankline-nvim-lua;
+          #
+          #   meta = with lib; {
+          #     description = "Indent guides for Neovim";
+          #     homepage = "https://github.com/lukas-reineke/indent-blankline.nvim/";
+          #     # license = licenses.mit;
+          #     platforms = platforms.unix;
+          #   };
+          # }
+
+          # {
+          #   pkgs,
+          #   stdenv,
+          #   fetchFromGitHub,
+          #   lib,
+          #   inputs,
+          #   ...
+          # }:
+          # pkgs.vimUtils.buildVimPlugin {
+          #   pname = "nvim-fzf";
+          #   version = "latest";
+          #   src = inputs.nvim-fzf;
+          #
+          #   meta = with lib; {
+          #     description = "A Lua API for using fzf in neovim";
+          #     homepage = "https://github.com/vijaymarupudi/nvim-fzf";
+          #     license = licenses.gpl3;
+          #     platforms = platforms.unix;
+          #   };
+          # }
+          #
+
           pinpox-neovim = pkgs.writeShellScriptBin "nvim" ''
             set -efu
             unset VIMINIT

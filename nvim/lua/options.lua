@@ -36,7 +36,7 @@ vim.cmd('set termguicolors')
 
 -- window-local options
 vim.wo.number          = true               -- show absolute line numbers
-vim.wo.relativenumber  = true               -- show relative line numbers
+-- vim.wo.relativenumber  = true               -- show relative line numbers
 vim.wo.cursorline      = true               -- highlight current line
 
 -- Backups/Swapfiles
@@ -58,6 +58,8 @@ vim.o.tabstop          = 4                  -- A tab is displayed 4 collumns wid
 -- Folding
 vim.o.foldmethod       = "expr"                       -- set folding to expression/treesitter folder
 vim.o.foldexpr         = "nvim_treesitter#foldexpr()"
+-- vim.o.foldexpr         = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldtext         = "v:lua.vim.treesitter.foldtext()"
 vim.o.foldlevelstart   = 20                           -- start with open folds
 
 -- Language specific

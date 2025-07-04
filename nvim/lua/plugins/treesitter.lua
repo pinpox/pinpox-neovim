@@ -8,7 +8,6 @@ return {
 		},
 
 		config = function()
-
 			-- TODO: install this properly via nix instead of running :TSInstall all
 			-- https://discourse.nixos.org/t/psa-if-you-are-on-unstable-try-out-nvim-treesitter-withallgrammars/23321/6
 
@@ -24,6 +23,10 @@ return {
 				--
 				-- Broken on nixos?
 				auto_install = false,
+
+				fold = {
+					enable = true,
+				},
 
 				highlight = {
 					enable = true,

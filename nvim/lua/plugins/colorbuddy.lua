@@ -24,7 +24,6 @@ return {
 				local st         = s.strikethrough
 				local v          = vim
 
-				-- TODO Think of a better colorscheme name
 				v.g.colors_name = 'generated'
 
 				local nixcolors = require('nixcolors')
@@ -87,6 +86,7 @@ return {
 				Group.new('@character',                          c.Green,        c.none, no)
 				Group.new('@character.special',                  c.TODO,         c.none, no)
 				Group.new('@comment',                            c.Blue,         c.none, i)
+				Group.new('@comment.documentation',              c.Cyan,         c.none, i)
 				Group.new('@conditional',                        c.Magenta,      c.none, i)
 				Group.new('@const.macro',                        c.Green,        c.none, no)
 				Group.new('@constant',                           c.Cyan,         c.none, no)
@@ -125,6 +125,8 @@ return {
 				Group.new('@math',                               c.TODO,         c.none, no)
 				Group.new('@method',                             c.Cyan,         c.none, no)
 				Group.new('@method.call',                        c.Cyan,         c.none, no)
+				Group.new('@method.call',                        c.Cyan,         c.none, no)
+				Group.new('@module',                             c.Magenta,      c.none, no)
 				Group.new('@function.method.call',               c.Cyan,         c.none, no)
 				Group.new('@namespace',                          c.Magenta,      c.none, no)
 				Group.new('@none',                               c.White,        c.none, no)
@@ -243,7 +245,7 @@ return {
 				Group.new('@markup.raw.block',                   c.BrightWhite,  c.none, no)
 				Group.new('@markup.block',                       c.none,         c.none, no)
 				Group.new('@markup.list',                        c.Cyan,         c.none, b)
-				Group.new('markdownCode',                        c.Green,        c.none, no)
+				Group.new('@markup',                             c.Green,        c.none, no)
 				Group.new('markdownCode',                        c.Green,        c.none, no)
 				Group.new('markdownCodeBlock',                   c.Red,          c.none, no)
 				Group.new('markdownCodeDelimiter',               c.Green,        c.none, no)
@@ -306,9 +308,10 @@ return {
 				Group.new('MoreMsg',                  c.White,         c.none,        no)
 				Group.new('NonText',                  c.BrightBlack,   c.none,        no)
 				Group.new('PMenu',                    c.none,          c.BrightBlack, no)
-				Group.new('PMenuSel',                 c.none,          c.Blue,        no)
-				Group.new('PMenuSbar',                c.none,          c.BrightBlue,  no)
+				Group.new('PMenuSel',                 c.none,          c.BrightWhite, no)
+				Group.new('PMenuSbar',                c.none,          c.BrightWhite, no)
 				Group.new('PMenuThumb',               c.none,          c.White,       no)
+				Group.new('PMenuKind',                c.BrightCyan,          c.no,          no)
 				Group.new('Question',                 c.Cyan,          c.none,        no)
 				Group.new('Search',                   c.BrightBlack,   c.Yellow,      no)
 				Group.new('SpecialKey',               c.BrightBlack,   c.none,        no)
@@ -838,9 +841,73 @@ return {
 				Group.new('IndentBlanklineContextChar',  c.Blue,        c.none,        no)
 
 				-- Vim illuminate
-				Group.new('IlluminatedWordText',         c.none,        c.BrightBlack, no)
 				Group.new('IlluminatedWordRead',         c.none,        c.BrightBlack, no)
+				Group.new('IlluminatedWordText',         c.none,        c.BrightBlack, no)
 				Group.new('IlluminatedWordWrite',        c.none,        c.BrightBlack, no)
+
+				-- blink.cmp Defaults:
+				-- Group.new('BlinkCmpMenu',                         g.Pmenu,                       g.Pmenu,                       g.Pmenu)                       -- The completion menu window
+				-- Group.new('BlinkCmpMenuBorder',                   g.Pmenu,                       g.Pmenu,                       g.Pmenu)                       -- The completion menu window border
+				-- Group.new('BlinkCmpMenuSelection',                g.PmenuSel,                    g.PmenuSel,                    g.PmenuSel)                    -- The completion menu window selected item
+				-- Group.new('BlinkCmpScrollBarThumb',               g.PmenuThumb,                  g.PmenuThumb,                  g.PmenuThumb)                  -- The scrollbar thumb
+				-- Group.new('BlinkCmpScrollBarGutter',              g.PmenuSbar,                   g.PmenuSbar,                   g.PmenuSbar)                   -- The scrollbar gutter
+				-- Group.new('BlinkCmpLabel',                        g.Pmenu,                       g.Pmenu,                       g.Pmenu)                       -- Label of the completion item
+				-- Group.new('BlinkCmpLabelDeprecated',              g.PmenuExtra,                  g.PmenuExtra,                  g.PmenuExtra)                  -- Deprecated label of the completion item
+				-- Group.new('BlinkCmpLabelMatch',                   g.Pmenu,                       g.Pmenu,                       g.Pmenu)                       -- (Currently unused) Label of the completion item when it matches the query
+				-- Group.new('BlinkCmpLabelDetail',                  g.PmenuExtra,                  g.PmenuExtra,                  g.PmenuExtra)                  -- Label description of the completion item
+				-- Group.new('BlinkCmpLabelDescription',             g.PmenuExtra,                  g.PmenuExtra,                  g.PmenuExtra)                  -- Label description of the completion item
+				-- Group.new('BlinkCmpKind',                         g.PmenuKind,                   c.none,                   g.PmenuKind)                   -- Kind icon/text of the completion item
+				-- Group.new('BlinkCmpSource',                       g.PmenuExtra,                  g.PmenuExtra,                  g.PmenuExtra)                  -- Source of the completion item
+				-- Group.new('BlinkCmpGhostText',                    g.NonText,                     c.none,                     g.NonText)                     -- Preview item with ghost text
+				-- Group.new('BlinkCmpDoc',                          g.NormalFloat,                 g.NormalFloat,                 g.NormalFloat)                 -- The documentation window
+				-- Group.new('BlinkCmpDocBorder',                    g.NormalFloat,                 g.NormalFloat,                 g.NormalFloat)                 -- The documentation window border
+				-- Group.new('BlinkCmpDocSeparator',                 g.NormalFloat,                 g.NormalFloat,                 g.NormalFloat)                 -- The documentation separator between doc and detail
+				-- Group.new('BlinkCmpDocCursorLine',                g.Visual,                      g.Visual,                      g.Visual)                      -- The documentation window cursor line
+				-- Group.new('BlinkCmpSignatureHelp',                g.NormalFloat,                 g.NormalFloat,                 g.NormalFloat)                 -- The signature help window
+				-- Group.new('BlinkCmpSignatureHelpBorder',          g.NormalFloat,                 g.NormalFloat,                 g.NormalFloat)                 -- The signature help window border
+				-- Group.new('BlinkCmpSignatureHelpActiveParameter', g.LspSignatureActiveParameter, g.LspSignatureActiveParameter, g.LspSignatureActiveParameter) -- Active parameter of the signature help
+
+				-- Color of icons completion menu
+				local kinds = {
+					Array = "@punctuation.bracket",
+					Boolean = "@boolean",
+					Class = "@type",
+					Color = "Special",
+					Function = "@function",
+					Constant = "@constant",
+					Constructor = "@constructor",
+					Event = "Special",
+					Field = "@field",
+					File = "Normal",
+					Folder = "Directory",
+					Keyword = "@keyword",
+					Method = "@method",
+					Module = "@module",
+					Namespace = "@module",
+					Null = "@constant.builtin",
+					Number = "@number",
+					Object = "@constant",
+					Operator = "@operator",
+					Package = "@module",
+					Property = "@property",
+					Reference = "@markup.link",
+					Snippet = "Cursor",
+					String = "@string",
+					Struct = "@structure",
+					Text = "@markup",
+					TypeParameter = "@type",
+					Unit = "@structure",
+					Value = "@string",
+					Variable = "@variable",
+					-- Enum = "@lsp.type.enum",
+					-- EnumMember = "@lsp.type.enumMember",
+					-- Interface = "@lsp.type.interface",
+					-- Key = "@variable.member",
+				}
+
+				for kind, link in pairs(kinds) do
+					Group.new("BlinkCmpKind" .. kind, g[link], c.none, no)
+				end
 			end,
 		},
 	}
