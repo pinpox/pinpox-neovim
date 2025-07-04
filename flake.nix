@@ -147,7 +147,7 @@
             pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
               pkgs.neovimUtils.makeNeovimConfig {
                 wrapRc = true;
-                luaRcContent = ''
+                customLuaRC = ''
                   -- Bootstrap lazy.nvim
                   local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
                   vim.opt.rtp:prepend(lazypath)
