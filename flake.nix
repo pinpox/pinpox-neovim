@@ -77,7 +77,6 @@
               plugins = with pkgs.vimPlugins; [
                 lazy-nvim
                 blink-cmp
-                friendly-snippets
 
                 # vim-autoformat #replaced with conform-nvim (testing)
                 ansible-vim
@@ -101,7 +100,6 @@
                 gitsigns-nvim
                 gotests-vim
                 haskell-vim
-                oil-nvim
                 lualine-nvim
                 luasnip
                 nvim-highlight-colors
