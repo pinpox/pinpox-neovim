@@ -127,6 +127,7 @@
                 wilder-nvim
                 zig-vim
                 zk-nvim
+            incline-nvim
               ];
 
               pluginpaths = pkgs.linkFarm "plugindirs" (
