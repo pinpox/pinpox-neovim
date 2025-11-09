@@ -17,7 +17,6 @@ return {
 				rust_analyzer = {},
 				zls = {},
 				tinymist = {},
-				-- typst_lsp = {},
 				-- harper_ls = {},
 
 				-- Spell/Grammar checking, e.g for markdown files

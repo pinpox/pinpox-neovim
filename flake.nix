@@ -42,7 +42,6 @@
             name = "lsp-servers";
             paths = with pkgs; [
               # terraform
-              # typst-lsp
               cargo
               gopls # LSP go
               typescript-language-server
@@ -64,8 +63,6 @@
               stylua # lua formatter
               terraform-ls # LSP terraform
               tinymist
-              typst
-              typstfmt
               vscode-extensions.golang.go # Golang snippets
               zig
               zls
@@ -111,7 +108,6 @@
                 outline-nvim
                 playground
                 plenary-nvim
-                typst-vim
                 vim-better-whitespace
                 vim-devicons
                 vim-easy-align

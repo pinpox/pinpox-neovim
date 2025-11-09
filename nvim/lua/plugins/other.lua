@@ -12,7 +12,6 @@ return {
 	{ dir = pluginpaths .. "/oil.nvim" },
 	{ dir = pluginpaths .. "/playground" },
 	{ dir = pluginpaths .. "/plenary.nvim" },
-	{ dir = pluginpaths .. "/typst.vim", lazy = false, ft = "typst" },
 	{ dir = pluginpaths .. "/vim-better-whitespace" },
 	{ dir = pluginpaths .. "/vim-devicons" },
 	{ dir = pluginpaths .. "/vim-easy-align" },
