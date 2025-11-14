@@ -77,7 +77,9 @@
 
                 # vim-autoformat #replaced with conform-nvim (testing)
                 ansible-vim
-                base16-vim
+                oxocarbon-nvim
+                modus-themes-nvim
+                # base16-vim
                 ccc-nvim
                 # nvim-cmp
                 # cmp-buffer
@@ -165,10 +167,7 @@
                   -- Setup automatic theme switching
                   require('theme-sync').setup({
                       on_dark = function()
-                          vim.o.background = "dark"
-                          if _G.reload_colorbuddy_theme then
-                              _G.reload_colorbuddy_theme()
-                          end
+                          vim.opt.background = "dark"
                           if _G.reload_lualine_theme then
                               _G.reload_lualine_theme()
                           end
@@ -178,10 +177,7 @@
                           print("Theme switched to dark")
                       end,
                       on_light = function()
-                          vim.o.background = "light"
-                          if _G.reload_colorbuddy_theme then
-                              _G.reload_colorbuddy_theme()
-                          end
+                          vim.opt.background = "light"
                           if _G.reload_lualine_theme then
                               _G.reload_lualine_theme()
                           end

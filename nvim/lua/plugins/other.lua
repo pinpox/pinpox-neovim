@@ -2,7 +2,7 @@ local nixcolors = require("nixcolors")
 return {
 	{ dir = pluginpaths .. "/ansible-vim" },
 	{ dir = pluginpaths .. "/vim-terraform" },
-	{ dir = pluginpaths .. "/base16-vim" },
+	-- { dir = pluginpaths .. "/base16-vim" },
 	{ dir = pluginpaths .. "/friendly-snippets" },
 	{ dir = pluginpaths .. "/gotests-vim" },
 	{ dir = pluginpaths .. "/haskell-vim" },
@@ -36,5 +36,5 @@ return {
 	{ dir = pluginpaths .. "/vim-textobj-user" },
 	{ dir = pluginpaths .. "/wilder.nvim" },
 	{ dir = pluginpaths .. "/zig.vim" },
-	{ dir = pluginpaths .. "/base16-vim" },
+	-- { dir = pluginpaths .. "/base16-vim" },
 }
