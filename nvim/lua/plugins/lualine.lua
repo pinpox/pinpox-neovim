@@ -12,9 +12,30 @@ return {
 				-- +-------------------------------------------------+
 
 				vim.opt.rtp:prepend(luamodpath)
-				local nixcolors = require('nixcolors')
 
-				local nixcolors_theme = {
+				local conditions = {
+					buffer_not_empty = function()
+						return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
+					end,
+					hide_in_width = function()
+						return vim.fn.winwidth(0) > 80
+					end,
+					check_git_workspace = function()
+						local filepath = vim.fn.expand('%:p:h')
+						local gitdir = vim.fn.finddir('.git', filepath .. ';')
+						return gitdir and #gitdir > 0 and #gitdir < #filepath
+					end
+				}
+
+				-- Store mode colors globally for the color function
+				_G.lualine_mode_colors = {}
+
+				local function setup_lualine()
+					-- Reload nixcolors to get fresh colors
+					package.loaded['nixcolors'] = nil
+					local nixcolors = require('nixcolors')
+
+					local nixcolors_theme = {
 					normal = {
 						a = { fg = nixcolors.Black, bg = nixcolors.Blue },
 						b = { fg = nixcolors.Black, bg = nixcolors.BrightWhite},
@@ -32,21 +53,7 @@ return {
 					},
 				}
 
-				local conditions = {
-					buffer_not_empty = function()
-						return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
-					end,
-					hide_in_width = function()
-						return vim.fn.winwidth(0) > 80
-					end,
-					check_git_workspace = function()
-						local filepath = vim.fn.expand('%:p:h')
-						local gitdir = vim.fn.finddir('.git', filepath .. ';')
-						return gitdir and #gitdir > 0 and #gitdir < #filepath
-					end
-				}
-
-				local mode_colors = {
+					_G.lualine_mode_colors = {
 					n      = nixcolors.Blue,
 					i      = nixcolors.Green,
 					v      = nixcolors.Magenta,
@@ -96,7 +103,7 @@ return {
 							{
 								'mode',
 								color = function()
-									return { bg = mode_colors[vim.fn.mode()], gui = 'bold' }
+									return { bg = _G.lualine_mode_colors[vim.fn.mode()], gui = 'bold' }
 								end,
 							},
 						},
@@ -149,7 +156,7 @@ return {
 							{
 								-- Lsp server name .
 								function ()
-									local msg = 'No Active Lsp'
+									local msg = 'no LSP'
 									local buf_ft = vim.api.nvim_buf_get_option(0,'filetype')
 									local clients = vim.lsp.get_clients()
 									if next(clients) == nil then return msg end
@@ -197,7 +204,19 @@ return {
 						},
 					},
 				}
-			end,
+
+				-- Force lualine to refresh and apply the new theme
+				vim.schedule(function()
+					require('lualine').refresh()
+				end)
+			end
+
+			-- Make the setup function globally accessible for theme reloading
+			_G.reload_lualine_theme = setup_lualine
+
+			-- Initial setup
+			setup_lualine()
+		end,
 		},
 	}
 

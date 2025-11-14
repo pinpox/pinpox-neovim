@@ -169,6 +169,9 @@
                           if _G.reload_colorbuddy_theme then
                               _G.reload_colorbuddy_theme()
                           end
+                          if _G.reload_lualine_theme then
+                              _G.reload_lualine_theme()
+                          end
                           if _G.reload_fzf_theme then
                               _G.reload_fzf_theme()
                           end
@@ -178,6 +181,9 @@
                           vim.o.background = "light"
                           if _G.reload_colorbuddy_theme then
                               _G.reload_colorbuddy_theme()
+                          end
+                          if _G.reload_lualine_theme then
+                              _G.reload_lualine_theme()
                           end
                           if _G.reload_fzf_theme then
                               _G.reload_fzf_theme()
