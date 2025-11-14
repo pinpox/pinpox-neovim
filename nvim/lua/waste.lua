@@ -65,20 +65,3 @@ end
 
 vim.api.nvim_create_user_command("Waste", send_to_wastebin, { desc = "Send to Wastebin", nargs = "*", range = true })
 
--- Setup automatic theme switching
-require('theme-sync').setup({
-	on_dark = function()
-		vim.o.background = "dark"
-		if _G.reload_colorbuddy_theme then
-			_G.reload_colorbuddy_theme()
-		end
-		print("Theme switched to dark")
-	end,
-	on_light = function()
-		vim.o.background = "light"
-		if _G.reload_colorbuddy_theme then
-			_G.reload_colorbuddy_theme()
-		end
-		print("Theme switched to light")
-	end,
-})
