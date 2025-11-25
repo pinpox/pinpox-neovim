@@ -26,7 +26,34 @@
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
       # Nixpkgs instantiated for supported system types.
-      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+      nixpkgsFor = forAllSystems (
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [
+            (self: super: {
+              # TODO https://github.com/NixOS/nixpkgs/pull/464773
+              # Build lualine as a simple vim plugin instead of through luarocks to avoid rockspec hash mismatch
+              vimPlugins = super.vimPlugins // {
+                lualine-nvim = super.vimUtils.buildVimPlugin {
+                  pname = "lualine.nvim";
+                  version = "unstable-2024-01-01";
+                  src = super.fetchFromGitHub {
+                    owner = "nvim-lualine";
+                    repo = "lualine.nvim";
+                    rev = "47f91c416daef12db467145e16bed5bbfe00add8"; # From PR #464773
+                    hash = "sha256-OpLZH+sL5cj2rcP5/T+jDOnuxd1QWLHCt2RzloffZOA=";
+                  };
+                  meta = {
+                    homepage = "https://github.com/nvim-lualine/lualine.nvim";
+                    description = "A blazing fast and easy to configure Neovim statusline";
+                  };
+                };
+              };
+            })
+          ];
+        }
+      );
 
     in
     {
