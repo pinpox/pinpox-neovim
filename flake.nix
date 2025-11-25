@@ -49,7 +49,6 @@
               libgccjit # Needed for treesitter
               fzf
               lua-language-server
-              ltex-ls-plus
               nil
               nixd
               nodePackages.bash-language-server
