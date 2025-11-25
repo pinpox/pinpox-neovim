@@ -12,12 +12,15 @@ return {
 					style = nixcolors.Cyan,
 				},
 
-				indent = { enable = true },
+				indent = {
+					enable = true,
+					style = { vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Whitespace")), "fg", "gui") },
+				},
 
 				chunk = {
 					enable = true,
 					style = {
-						{ fg = nixcolors.BrightWhite},
+						{ fg = nixcolors.BrightWhite },
 						{ fg = nixcolors.BrightRed },
 					},
 				},

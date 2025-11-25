@@ -88,7 +88,6 @@ vim.cmd('au BufRead,BufNewFile *.md setlocal textwidth=80')
 vim.diagnostic.config({ virtual_text = true }) -- Show errors as virtual text
 
 vim.g.buftabline_indicators = 1
---vim.g.indent_blankline_use_treesitter_scope = true
 
 vim.opt.list = true
 vim.opt.listchars:append "space:⋅"

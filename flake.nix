@@ -76,7 +76,6 @@
                 blink-cmp
 
                 # vim-autoformat #replaced with conform-nvim (testing)
-                ansible-vim
                 oxocarbon-nvim
                 modus-themes-nvim
                 # base16-vim
@@ -203,9 +202,6 @@
 
           # Vim plugins, added inside existing pkgs.vimPlugins
           # vimPlugins = super.vimPlugins // {
-          #   indent-blankline-nvim-lua = super.callPackage ../packages/indent-blankline-nvim-lua {
-          #     inputs = inputs;
-          #   };
           #   nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
           #   nvim-cokeline = super.callPackage ../packages/nvim-cokeline { inputs = inputs; };
           # };
@@ -239,19 +235,6 @@
           #   inputs,
           #   ...
           # }:
-          # pkgs.vimUtils.buildVimPlugin {
-          #   pname = "indent-blankline-nvim-lua";
-          #   version = "latest";
-          #   src = inputs.indent-blankline-nvim-lua;
-          #
-          #   meta = with lib; {
-          #     description = "Indent guides for Neovim";
-          #     homepage = "https://github.com/lukas-reineke/indent-blankline.nvim/";
-          #     # license = licenses.mit;
-          #     platforms = platforms.unix;
-          #   };
-          # }
-
           # {
           #   pkgs,
           #   stdenv,
