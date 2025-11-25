@@ -68,7 +68,7 @@
             ];
           };
 
-          neovim =
+          neovim = { waylandSupport ? pkgs.stdenv.hostPlatform.isLinux }:
             let
               plugins = with pkgs.vimPlugins; [
                 lazy-nvim
@@ -141,6 +141,7 @@
 
             pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
               pkgs.neovimUtils.makeNeovimConfig {
+                inherit waylandSupport;
                 wrapRc = true;
                 customLuaRC = ''
                   -- Bootstrap lazy.nvim
@@ -256,13 +257,29 @@
           # }
           #
 
-          pinpox-neovim = pkgs.writeShellScriptBin "nvim" ''
-            set -efu
-            unset VIMINIT
-            export PATH=${extraEnv}/bin:${neovim}/bin:$PATH
-            export NVIM_APPNAME=${nvim-appname}
-            exec nvim --cmd "set rtp^=${./nvim}" "$@"
-          '';
+          pinpox-neovim =
+            let
+              neovimPackage = neovim { };
+            in
+            (pkgs.writeShellScriptBin "nvim" ''
+              set -efu
+              unset VIMINIT
+              export PATH=${extraEnv}/bin:${neovimPackage}/bin:$PATH
+              export NVIM_APPNAME=${nvim-appname}
+              exec nvim --cmd "set rtp^=${./nvim}" "$@"
+            '') // {
+              override = args:
+                let
+                  neovimPackageOverride = neovim args;
+                in
+                pkgs.writeShellScriptBin "nvim" ''
+                  set -efu
+                  unset VIMINIT
+                  export PATH=${extraEnv}/bin:${neovimPackageOverride}/bin:$PATH
+                  export NVIM_APPNAME=${nvim-appname}
+                  exec nvim --cmd "set rtp^=${./nvim}" "$@"
+                '';
+            };
         }
       );
 
