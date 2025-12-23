@@ -3,10 +3,6 @@ return {
 		dir = pluginpaths .. "/nvim-treesitter",
 		name = "nvim-treesitter",
 
-		dependencies = {
-			{ dir = pluginpaths .. "/playground" },
-		},
-
 		config = function()
 			-- TODO: install this properly via nix instead of running :TSInstall all
 			-- https://discourse.nixos.org/t/psa-if-you-are-on-unstable-try-out-nvim-treesitter-withallgrammars/23321/6

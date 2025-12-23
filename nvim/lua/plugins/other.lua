@@ -9,7 +9,6 @@ return {
 	{ dir = pluginpaths .. "/nvim-highlight-colors" },
 	{ dir = pluginpaths .. "/nvim-lspconfig" },
 	{ dir = pluginpaths .. "/oil.nvim" },
-	{ dir = pluginpaths .. "/playground" },
 	{ dir = pluginpaths .. "/plenary.nvim" },
 	{ dir = pluginpaths .. "/vim-better-whitespace" },
 	{ dir = pluginpaths .. "/vim-devicons" },

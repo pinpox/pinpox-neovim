@@ -133,7 +133,6 @@
                 nvim-web-devicons
                 oil-nvim
                 outline-nvim
-                playground
                 plenary-nvim
                 vim-better-whitespace
                 vim-devicons
