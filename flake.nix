@@ -90,8 +90,8 @@
               terraform-ls # LSP terraform
               tinymist
               vscode-extensions.golang.go # Golang snippets
-              zig
-              zls
+              # zig # TODO: broken in nixpkgs (Zig build failure)
+              # zls # TODO: broken in nixpkgs (Zig build failure)
             ];
           };
 
