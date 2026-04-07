@@ -132,11 +132,10 @@
 
             in
 
-            pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
-              pkgs.neovimUtils.makeNeovimConfig {
-                inherit waylandSupport;
-                wrapRc = true;
-                customLuaRC = ''
+            pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
+              inherit waylandSupport;
+              wrapRc = true;
+              luaRcContent = ''
                   vim.g.mapleader = " "
                   vim.g.maplocalleader = "\\"
 
@@ -175,11 +174,10 @@
                           print("Theme switched to light")
                       end,
                   })
-                '';
+              '';
 
-                plugins = eagerPlugins;
-              }
-            );
+              plugins = map (p: { plugin = p; }) eagerPlugins;
+            };
 
           nvim-appname = "nvim-pinpox";
 
