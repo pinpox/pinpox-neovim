@@ -1,207 +1,183 @@
-return {
-	{
-		name = "lualine-nvim",
-		dir = pluginpaths .. "/lualine.nvim" ,
-		-- dependencies = {
-			--	{ dir = pluginpaths  .. "/fzf-lua"      },
-			-- },
-			config = function()
+-- +-------------------------------------------------+
+-- | A | B | C                             X | Y | Z |
+-- +-------------------------------------------------+
 
-				-- +-------------------------------------------------+
-				-- | A | B | C                             X | Y | Z |
-				-- +-------------------------------------------------+
+vim.opt.rtp:prepend(luamodpath)
 
-				vim.opt.rtp:prepend(luamodpath)
+local conditions = {
+  buffer_not_empty = function()
+    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
+  end,
+  hide_in_width = function()
+    return vim.fn.winwidth(0) > 80
+  end,
+  check_git_workspace = function()
+    local filepath = vim.fn.expand('%:p:h')
+    local gitdir = vim.fn.finddir('.git', filepath .. ';')
+    return gitdir and #gitdir > 0 and #gitdir < #filepath
+  end
+}
 
-				local conditions = {
-					buffer_not_empty = function()
-						return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
-					end,
-					hide_in_width = function()
-						return vim.fn.winwidth(0) > 80
-					end,
-					check_git_workspace = function()
-						local filepath = vim.fn.expand('%:p:h')
-						local gitdir = vim.fn.finddir('.git', filepath .. ';')
-						return gitdir and #gitdir > 0 and #gitdir < #filepath
-					end
-				}
+-- Store mode colors globally for the color function
+_G.lualine_mode_colors = {}
 
-				-- Store mode colors globally for the color function
-				_G.lualine_mode_colors = {}
+local function setup_lualine()
+  -- Reload nixcolors to get fresh colors
+  package.loaded['nixcolors'] = nil
+  local nixcolors = require('nixcolors')
 
-				local function setup_lualine()
-					-- Reload nixcolors to get fresh colors
-					package.loaded['nixcolors'] = nil
-					local nixcolors = require('nixcolors')
+  local nixcolors_theme = {
+    normal = {
+      a = { fg = nixcolors.Black, bg = nixcolors.Blue },
+      b = { fg = nixcolors.Black, bg = nixcolors.BrightWhite},
+      c = { bg = nixcolors.BrightBlack },
+    },
 
-					local nixcolors_theme = {
-					normal = {
-						a = { fg = nixcolors.Black, bg = nixcolors.Blue },
-						b = { fg = nixcolors.Black, bg = nixcolors.BrightWhite},
-						c = { bg = nixcolors.BrightBlack },
-					},
+    insert = { a = { fg = nixcolors.Black, bg = nixcolors.Blue } },
+    visual = { a = { fg = nixcolors.Black, bg = nixcolors.Cyan } },
+    replace = { a = { fg = nixcolors.Black, bg = nixcolors.Red } },
 
-					insert = { a = { fg = nixcolors.Black, bg = nixcolors.Blue } },
-					visual = { a = { fg = nixcolors.Black, bg = nixcolors.Cyan } },
-					replace = { a = { fg = nixcolors.Black, bg = nixcolors.Red } },
+    inactive = {
+      a = { fg = nixcolors.White, bg = nixcolors.Black },
+      b = { fg = nixcolors.White, bg = nixcolors.Black },
+      c = { fg = nixcolors.White },
+    },
+  }
 
-					inactive = {
-						a = { fg = nixcolors.White, bg = nixcolors.Black },
-						b = { fg = nixcolors.White, bg = nixcolors.Black },
-						c = { fg = nixcolors.White },
-					},
-				}
+  _G.lualine_mode_colors = {
+    n      = nixcolors.Blue,
+    i      = nixcolors.Green,
+    v      = nixcolors.Magenta,
+    [''] = nixcolors.Magenta,
+    V      = nixcolors.BrightMagenta,
+    c      = nixcolors.Magenta,
+    no     = nixcolors.Red,
+    s      = nixcolors.Yellow,
+    S      = nixcolors.BrightYellow,
+    [''] = nixcolors.BrightYellow,
+    ic     = nixcolors.Yellow,
+    R      = nixcolors.Cyan,
+    Rv     = nixcolors.BrightCyan,
+    cv     = nixcolors.Red,
+    ce     = nixcolors.Red,
+    r      = nixcolors.Cyan,
+    rm     = nixcolors.Cyan,
+    ['r?'] = nixcolors.Cyan,
+    ['!']  = nixcolors.Red,
+    t      = nixcolors.Red,
+  }
 
-					_G.lualine_mode_colors = {
-					n      = nixcolors.Blue,
-					i      = nixcolors.Green,
-					v      = nixcolors.Magenta,
-					[''] = nixcolors.Magenta,
-					V      = nixcolors.BrightMagenta,
-					c      = nixcolors.Magenta,
-					no     = nixcolors.Red,
-					s      = nixcolors.Yellow,
-					S      = nixcolors.BrightYellow,
-					[''] = nixcolors.BrightYellow,
-					ic     = nixcolors.Yellow,
-					R      = nixcolors.Cyan,
-					Rv     = nixcolors.BrightCyan,
-					cv     = nixcolors.Red,
-					ce     = nixcolors.Red,
-					r      = nixcolors.Cyan,
-					rm     = nixcolors.Cyan,
-					['r?'] = nixcolors.Cyan,
-					['!']  = nixcolors.Red,
-					t      = nixcolors.Red,
-				}
+  require("lualine").setup {
 
-				require("lualine").setup {
-
-					options = {
-						theme = nixcolors_theme,
-						component_separators = '',
-						section_separators = { left = '', right = '' },
-						always_show_tabline = false,
-						-- section_separators = { left = '', right = '' },
-					},
+    options = {
+      theme = nixcolors_theme,
+      component_separators = '',
+      section_separators = { left = '', right = '' },
+      always_show_tabline = false,
+    },
 
 
-					tabline = {
-						lualine_a = {
-							{
-								"buffers",
-								-- separator = { right = '' , left = '' },
-								separator = { right = ' ' , left = ' ' },
-								right_padding = 2,
-								symbols = { alternate_file = "" },
-							},
-						},
-					},
+    tabline = {
+      lualine_a = {
+        {
+          "buffers",
+          separator = { right = ' ' , left = ' ' },
+          right_padding = 2,
+          symbols = { alternate_file = "" },
+        },
+      },
+    },
 
-					sections = {
-						lualine_a = {
-							{
-								'mode',
-								color = function()
-									return { bg = _G.lualine_mode_colors[vim.fn.mode()], gui = 'bold' }
-								end,
-							},
-						},
-						-- },
+    sections = {
+      lualine_a = {
+        {
+          'mode',
+          color = function()
+            return { bg = _G.lualine_mode_colors[vim.fn.mode()], gui = 'bold' }
+          end,
+        },
+      },
 
-						lualine_b = {},
+      lualine_b = {},
 
-						lualine_c ={ {
-							-- filesize component
-							function()
-								local function format_file_size(file)
-									local size = vim.fn.getfsize(file)
-									if size <= 0 then return '' end
-									local sufixes = {'b', 'k', 'm', 'g'}
-									local i = 1
-									while size > 1024 do
-										size = size / 1024
-										i = i + 1
-									end
-									return string.format('%.1f%s', size, sufixes[i])
-								end
-								local file = vim.fn.expand('%:p')
-								if string.len(file) == 0 then return '' end
-								return format_file_size(file)
-							end,
-							condition = conditions.buffer_not_empty,
-							color = { fg = nixcolors.White, gui = 'italic'},
-						},
-						-- {'location'},
-						-- {
-							--	'progress',
-							--	color = {fg = nixcolors.White, gui = 'bold'},
-							-- },
-							{
-								'diagnostics',
-								sources = {'nvim_diagnostic'},
-								symbols = {error = ' ', warn = ' ', info= ' '},
-								color_error = nixcolors.Red,
-								color_warn = nixcolors.Yellow,
-								color_info = nixcolors.Cyan,
-							},
-							-- Insert mid section. You can make any number of sections in neovim :)
-							-- for lualine it's any number gretter then 2
-							{function() return '%=' end},
-							{
-								-- Lsp server name .
-								function ()
-									local msg = ''
-									local buf_ft = vim.api.nvim_buf_get_option(0,'filetype')
-									local clients = vim.lsp.get_clients()
-									if next(clients) == nil then return msg end
-									for _, client in ipairs(clients) do
-										local filetypes = client.config.filetypes
-										if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-											return client.name
-										end
-									end
-									return msg
-								end,
-								icon = ' LSP:',
-								color = {fg = nixcolors.BrightCyan, gui = 'bold'}
-							},
-						},
+      lualine_c ={ {
+        -- filesize component
+        function()
+          local function format_file_size(file)
+            local size = vim.fn.getfsize(file)
+            if size <= 0 then return '' end
+            local sufixes = {'b', 'k', 'm', 'g'}
+            local i = 1
+            while size > 1024 do
+              size = size / 1024
+              i = i + 1
+            end
+            return string.format('%.1f%s', size, sufixes[i])
+          end
+          local file = vim.fn.expand('%:p')
+          if string.len(file) == 0 then return '' end
+          return format_file_size(file)
+        end,
+        condition = conditions.buffer_not_empty,
+        color = { fg = nixcolors.White, gui = 'italic'},
+      },
+      {
+        'diagnostics',
+        sources = {'nvim_diagnostic'},
+        symbols = {error = ' ', warn = ' ', info= ' '},
+        color_error = nixcolors.Red,
+        color_warn = nixcolors.Yellow,
+        color_info = nixcolors.Cyan,
+      },
+      -- Insert mid section. You can make any number of sections in neovim :)
+      -- for lualine it's any number gretter then 2
+      {function() return '%=' end},
+      {
+        -- Lsp server name .
+        function ()
+          local msg = ''
+          local buf_ft = vim.api.nvim_buf_get_option(0,'filetype')
+          local clients = vim.lsp.get_clients()
+          if next(clients) == nil then return msg end
+          for _, client in ipairs(clients) do
+            local filetypes = client.config.filetypes
+            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+              return client.name
+            end
+          end
+          return msg
+        end,
+        icon = ' LSP:',
+        color = {fg = nixcolors.BrightCyan, gui = 'bold'}
+      },
+    },
 
-						lualine_x = {
+    lualine_x = {
 
-							{
-								'diff',
-								-- Is it me or the symbol for modified us really weird
-								symbols = {added= ' ', modified= ' ', removed= ' '},
-								color_added = nixcolors.Green,
-								color_modified = nixcolors.BrightYellow,
-								color_removed = nixcolors.Red,
-								condition = conditions.hide_in_width
-							},
+      {
+        'diff',
+        symbols = {added= ' ', modified= ' ', removed= ' '},
+        color_added = nixcolors.Green,
+        color_modified = nixcolors.BrightYellow,
+        color_removed = nixcolors.Red,
+        condition = conditions.hide_in_width
+      },
 
-						},
+    },
 
-						lualine_y = {},
-						lualine_z = {'location'},
-					},
-				}
+    lualine_y = {},
+    lualine_z = {'location'},
+    },
+  }
 
-				-- Force lualine to refresh and apply the new theme
-				vim.schedule(function()
-					require('lualine').refresh()
-				end)
-			end
+  -- Force lualine to refresh and apply the new theme
+  vim.schedule(function()
+    require('lualine').refresh()
+  end)
+end
 
-			-- Make the setup function globally accessible for theme reloading
-			_G.reload_lualine_theme = setup_lualine
+-- Make the setup function globally accessible for theme reloading
+_G.reload_lualine_theme = setup_lualine
 
-			-- Initial setup
-			setup_lualine()
-		end,
-		},
-	}
-
-
-
+-- Initial setup
+setup_lualine()

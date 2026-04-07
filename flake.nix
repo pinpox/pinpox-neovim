@@ -26,34 +26,7 @@
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
       # Nixpkgs instantiated for supported system types.
-      nixpkgsFor = forAllSystems (
-        system:
-        import nixpkgs {
-          inherit system;
-          overlays = [
-            (self: super: {
-              # TODO https://github.com/NixOS/nixpkgs/pull/464773
-              # Build lualine as a simple vim plugin instead of through luarocks to avoid rockspec hash mismatch
-              vimPlugins = super.vimPlugins // {
-                lualine-nvim = super.vimUtils.buildVimPlugin {
-                  pname = "lualine.nvim";
-                  version = "unstable-2024-01-01";
-                  src = super.fetchFromGitHub {
-                    owner = "nvim-lualine";
-                    repo = "lualine.nvim";
-                    rev = "47f91c416daef12db467145e16bed5bbfe00add8"; # From PR #464773
-                    hash = "sha256-OpLZH+sL5cj2rcP5/T+jDOnuxd1QWLHCt2RzloffZOA=";
-                  };
-                  meta = {
-                    homepage = "https://github.com/nvim-lualine/lualine.nvim";
-                    description = "A blazing fast and easy to configure Neovim statusline";
-                  };
-                };
-              };
-            })
-          ];
-        }
-      );
+      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 
     in
     {
@@ -84,7 +57,6 @@
               rustc
               rustfmt
               shellcheck
-              stix-two
               stylua # lua formatter
               tinymist
               vscode-extensions.golang.go # Golang snippets
@@ -95,24 +67,12 @@
 
           neovim = { waylandSupport ? pkgs.stdenv.hostPlatform.isLinux }:
             let
-              plugins = with pkgs.vimPlugins; [
-                lazy-nvim
+              # Eager plugins: loaded at startup via wrapNeovim's standard
+              # mechanism (added directly to runtimepath via --cmd "set rtp^=...").
+              eagerPlugins = with pkgs.vimPlugins; [
+                lz-n  # the lazy-loader itself; must be eager
                 blink-cmp
-
-                # vim-autoformat #replaced with conform-nvim (testing)
-                oxocarbon-nvim
-                modus-themes-nvim
-                # base16-vim
                 ccc-nvim
-                # nvim-cmp
-                # cmp-buffer
-                # cmp-calc
-                # cmp-emoji
-                # cmp-nvim-lsp
-                # cmp-nvim-lua
-                # cmp-path
-                # cmp-spell
-                # cmp_luasnip
                 colorbuddy-nvim
                 committia-vim
                 conform-nvim
@@ -120,8 +80,6 @@
                 friendly-snippets
                 fzf-lua
                 gitsigns-nvim
-                gotests-vim
-                haskell-vim
                 lualine-nvim
                 luasnip
                 nvim-highlight-colors
@@ -137,27 +95,39 @@
                 vim-easy-align
                 vim-eunuch
                 vim-gnupg
-                vim-go
-                # vim-gutentags
                 vim-illuminate
-                vim-jsonnet
-                vim-nix
                 vim-repeat
                 vim-sandwich
                 vim-table-mode
                 vim-textobj-user
                 which-key-nvim
                 wilder-nvim
-                zig-vim
                 zk-nvim
-            incline-nvim
               ];
 
-              pluginpaths = pkgs.linkFarm "plugindirs" (
-                map (x: {
-                  name = x.pname;
-                  path = x;
-                }) plugins # We could just load *all* pkgs.vimPlugins here?
+              # Lazy plugins: installed as optional packages under
+              # pack/pinpox/opt/<pname>. lz.n calls :packadd on them when their
+              # trigger fires.
+              lazyPlugins = with pkgs.vimPlugins; [
+                hlchunk-nvim
+                incline-nvim
+                # Language-specific filetype plugins
+                gotests-vim
+                haskell-vim
+                vim-go
+                vim-jsonnet
+                vim-nix
+                zig-vim
+              ];
+
+              # Build a packpath dir containing only the opt/ packages.
+              # The eager plugins are already on the rtp via wrapNeovim, so they
+              # don't need to be in this linkfarm.
+              optPackDir = pkgs.linkFarm "pinpox-nvim-opt" (
+                map (p: {
+                  name = "pack/pinpox/opt/${p.pname}";
+                  path = p;
+                }) lazyPlugins
               );
 
             in
@@ -167,21 +137,17 @@
                 inherit waylandSupport;
                 wrapRc = true;
                 customLuaRC = ''
-                  -- Bootstrap lazy.nvim
-                  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-                  vim.opt.rtp:prepend(lazypath)
                   vim.g.mapleader = " "
                   vim.g.maplocalleader = "\\"
 
-                  -- Access nixpkgs plugin paths
-                  pluginpaths = "${pluginpaths}"
+                  -- Make pack/pinpox/opt/* discoverable by :packadd (used by lz.n)
+                  vim.opt.packpath:prepend("${optPackDir}")
 
-                  -- Pass flake's ./nvim path to allow adding it to rtp to load other lua files
+                  -- Pass flake's ./nvim path so lua modules under it can be required
                   luamodpath = "${./nvim}"
 
-                  local utils = require("utils")
                   require('options') -- General options, should stay first!
-                  require("lazy").setup("plugins") -- loads all plugins in plugins dir
+                  require('plugins') -- Eager setup + lz.n registration
 
                   -- Non-plugin related configs
                   require('waste')
@@ -211,10 +177,7 @@
                   })
                 '';
 
-                # We only load lazy-nvim here, so that the rest of the plugins
-                # can be loaded from the plugin manager. This dirty hack allows
-                # lazy-loading plugins to improve startup time by orders of magnitude.
-                plugins = with pkgs.vimPlugins; [ lazy-nvim ];
+                plugins = eagerPlugins;
               }
             );
 

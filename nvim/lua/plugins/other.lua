@@ -1,37 +1,10 @@
-local nixcolors = require("nixcolors")
-return {
-	-- { dir = pluginpaths .. "/base16-vim" },
-	{ dir = pluginpaths .. "/friendly-snippets" },
-	{ dir = pluginpaths .. "/gotests-vim" },
-	{ dir = pluginpaths .. "/haskell-vim" },
-	{ dir = pluginpaths .. "/luasnip" },
-	{ dir = pluginpaths .. "/nvim-highlight-colors" },
-	{ dir = pluginpaths .. "/nvim-lspconfig" },
-	{ dir = pluginpaths .. "/oil.nvim" },
-	{ dir = pluginpaths .. "/plenary.nvim" },
-	{ dir = pluginpaths .. "/vim-better-whitespace" },
-	{ dir = pluginpaths .. "/vim-devicons" },
-	{ dir = pluginpaths .. "/vim-easy-align" },
-	{ dir = pluginpaths .. "/vim-eunuch" },
-	{ dir = pluginpaths .. "/vim-gnupg" },
-	{ dir = pluginpaths .. "/vim-go" },
-	-- { dir = pluginpaths .. "/vim-gutentags" },
-	{
-		dir = pluginpaths .. "/vim-illuminate",
-		-- under_cursor = true,
-		config = function()
-			require("illuminate").configure({
-				under_cursor = false,
-			})
-		end,
-	},
-	{ dir = pluginpaths .. "/vim-jsonnet" },
-	{ dir = pluginpaths .. "/vim-nix" },
-	{ dir = pluginpaths .. "/vim-repeat" },
-	{ dir = pluginpaths .. "/vim-sandwich" },
-	{ dir = pluginpaths .. "/vim-table-mode" },
-	{ dir = pluginpaths .. "/vim-textobj-user" },
-	{ dir = pluginpaths .. "/wilder.nvim" },
-	{ dir = pluginpaths .. "/zig.vim" },
-	-- { dir = pluginpaths .. "/base16-vim" },
-}
+-- Plugins that need no setup call — being on the runtimepath is enough.
+-- They're listed in flake.nix's eagerPlugins and added to rtp by wrapNeovim.
+--
+-- This file used to enumerate them as lazy.nvim `dir = ` specs; that's no
+-- longer needed. Kept as a placeholder so init.lua can require it without
+-- a special case, and as documentation of what's intentionally setup-free.
+
+require("illuminate").configure({
+  under_cursor = false,
+})
