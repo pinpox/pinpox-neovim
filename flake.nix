@@ -78,8 +78,8 @@
               lua-language-server
               nil
               nixd
-              nodePackages.bash-language-server
-              nodePackages.yaml-language-server # LSP yaml
+              bash-language-server
+              yaml-language-server # LSP yaml
               pyright # LSP python
               rust-analyzer
               rustc
