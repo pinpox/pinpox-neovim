@@ -82,6 +82,7 @@ return {
 						theme = nixcolors_theme,
 						component_separators = '',
 						section_separators = { left = '', right = '' },
+						always_show_tabline = false,
 						-- section_separators = { left = '', right = '' },
 					},
 
@@ -109,7 +110,7 @@ return {
 						},
 						-- },
 
-						lualine_b = { {'branch', icon = ''} },
+						lualine_b = {},
 
 						lualine_c ={ {
 							-- filesize component
@@ -132,11 +133,6 @@ return {
 							condition = conditions.buffer_not_empty,
 							color = { fg = nixcolors.White, gui = 'italic'},
 						},
-						{
-							'filename',
-							condition = conditions.buffer_not_empty,
-							color = {fg = nixcolors.Magenta, gui = 'italic'},
-						},
 						-- {'location'},
 						-- {
 							--	'progress',
@@ -156,7 +152,7 @@ return {
 							{
 								-- Lsp server name .
 								function ()
-									local msg = 'no LSP'
+									local msg = ''
 									local buf_ft = vim.api.nvim_buf_get_option(0,'filetype')
 									local clients = vim.lsp.get_clients()
 									if next(clients) == nil then return msg end
@@ -175,22 +171,6 @@ return {
 
 						lualine_x = {
 
-							-- Add components to right sections
-							{
-								'o:encoding', -- option component same as &encoding in viml
-								upper = true, -- I'm not sure why it's uper case either ;)
-								condition = conditions.hide_in_width,
-								color = {fg = nixcolors.Green, gui = 'bold'}
-							},
-
-							{
-								'fileformat',
-								upper = true,
-								icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-								color = {fg = nixcolors.Green, gui='bold'},
-							},
-
-
 							{
 								'diff',
 								-- Is it me or the symbol for modified us really weird
@@ -202,6 +182,9 @@ return {
 							},
 
 						},
+
+						lualine_y = {},
+						lualine_z = {'location'},
 					},
 				}
 

@@ -129,9 +129,8 @@ return {
 				end,
 			})
 
-			-- lspconfig updates while typing
-			vim.lsp.handlers["textDocument/publishDiagnostics"] =
-				vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { update_in_insert = true })
+			-- update diagnostics while typing
+			vim.diagnostic.config({ update_in_insert = true })
 		end,
 	},
 }
