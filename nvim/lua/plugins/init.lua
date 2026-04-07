@@ -19,7 +19,6 @@ local eager = {
   "other",
   "outline",
   "pqf",
-  "treesitter",
   "which-key-nvim",
   "zk-nvim",
 }

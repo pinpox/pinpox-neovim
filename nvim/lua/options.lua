@@ -83,6 +83,10 @@ vim.cmd('au BufRead,BufNewFile *.md setlocal textwidth=80')
 --
 --
 
+vim.cmd("colorscheme wildcharm")
+-- Make Nix code less pink
+vim.api.nvim_set_hl(0, '@variable.member', { link = 'Normal' })
+
 vim.diagnostic.config({ virtual_text = true }) -- Show errors as virtual text
 
 vim.g.buftabline_indicators = 1

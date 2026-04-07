@@ -84,7 +84,15 @@ end
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then return end
+
+    -- Disable semantic token highlighting
     client.server_capabilities.semanticTokensProvider = nil
+
+    -- Enable code lenses where supported (rendered as virtual lines in 0.12)
+    if client.server_capabilities.codeLensProvider then
+      vim.lsp.codelens.refresh({ bufnr = args.buf })
+    end
   end,
 })
 
