@@ -68,7 +68,6 @@
           extraEnv = pkgs.buildEnv {
             name = "lsp-servers";
             paths = with pkgs; [
-              # terraform
               cargo
               gopls # LSP go
               typescript-language-server
@@ -87,7 +86,6 @@
               shellcheck
               stix-two
               stylua # lua formatter
-              terraform-ls # LSP terraform
               tinymist
               vscode-extensions.golang.go # Golang snippets
               # zig # TODO: broken in nixpkgs (Zig build failure)
@@ -147,7 +145,6 @@
                 vim-repeat
                 vim-sandwich
                 vim-table-mode
-                vim-terraform
                 vim-textobj-user
                 which-key-nvim
                 wilder-nvim

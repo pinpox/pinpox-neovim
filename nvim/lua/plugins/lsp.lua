@@ -11,7 +11,6 @@ return {
 				ts_ls = {},
 				pyright = {},
 				gopls = {},
-				terraformls = {},
 				bashls = {},
 				yamlls = {},
 				rust_analyzer = {},

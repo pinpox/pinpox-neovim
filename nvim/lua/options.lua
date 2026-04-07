@@ -65,8 +65,6 @@ vim.o.foldlevelstart   = 20                           -- start with open folds
 -- Language specific
 vim.g["go_auto_type_info"]     = 1          -- Go:        Show Go type info of variables
 vim.g["vim_markdown_conceal"]  = 0          -- Markdown:  Disable concellevel for markdown
-vim.g["terraform_align"]       = 1          -- Terraform: Auto-align
-vim.g["terraform_fmt_on_save"] = 1          -- Terraform: Format on saving
 
 -- Wrap markdown files to 80 chars per line
 vim.cmd('au BufRead,BufNewFile *.md setlocal textwidth=80')

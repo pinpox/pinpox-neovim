@@ -1,6 +1,5 @@
 local nixcolors = require("nixcolors")
 return {
-	{ dir = pluginpaths .. "/vim-terraform" },
 	-- { dir = pluginpaths .. "/base16-vim" },
 	{ dir = pluginpaths .. "/friendly-snippets" },
 	{ dir = pluginpaths .. "/gotests-vim" },
