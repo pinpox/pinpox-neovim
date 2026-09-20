@@ -1,5 +1,4 @@
 local servers = {
-  ts_ls = {},
   pyright = {},
   gopls = {},
   bashls = {},

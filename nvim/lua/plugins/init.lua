@@ -64,8 +64,6 @@ require("lz.n").load({
   -- runtimepath provides syntax/indent/ftplugin/commands for the relevant ft.
   { "vim-go",      ft = "go" },
   { "gotests-vim", ft = "go" },
-  { "haskell-vim", ft = "haskell" },
-  { "vim-jsonnet", ft = "jsonnet" },
   { "vim-nix",     ft = "nix" },
   { "zig.vim",     ft = "zig" },
 })

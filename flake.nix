@@ -43,7 +43,6 @@
             paths = with pkgs; [
               cargo
               gopls # LSP go
-              typescript-language-server
               harper
               libgccjit # Needed for treesitter
               fzf
@@ -85,7 +84,31 @@
                 nvim-highlight-colors
                 nvim-lspconfig
                 nvim-pqf
-                nvim-treesitter.withAllGrammars
+                (nvim-treesitter.withPlugins (p: with p; [
+                  bash
+                  c
+                  css
+                  diff
+                  go
+                  gomod
+                  gosum
+                  html
+                  javascript
+                  json
+                  lua
+                  markdown
+                  markdown_inline
+                  nix
+                  python
+                  query
+                  regex
+                  rust
+                  toml
+                  vim
+                  vimdoc
+                  yaml
+                  zig
+                ]))
                 nvim-web-devicons
                 oil-nvim
                 outline-nvim
@@ -113,9 +136,7 @@
                 incline-nvim
                 # Language-specific filetype plugins
                 gotests-vim
-                haskell-vim
                 vim-go
-                vim-jsonnet
                 vim-nix
                 zig-vim
               ];
